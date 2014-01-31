@@ -1,0 +1,15 @@
+name    'treydock-ovirt'
+version '0.0.1'
+source 'git://github.com/treydock/puppet-ovirt.git'
+author 'treydock'
+license 'Apache License, Version 2.0'
+summary 'oVirt Puppet module'
+description 'oVirt Puppet module'
+project_page 'http://github.com/treydock/puppet-ovirt'
+
+## Add dependencies, if any:
+dependency 'puppetlabs/stdlib', '>=3.2.0 <5.0.0'
+dependency 'puppetlabs/firewall', '>=0.4.2 <1.0.0'
+dependency 'puppetlabs/inifile', '>=1.0.0 <2.0.0'
+dependency 'saz/sudo', '>=2.0.0 <4.0.0'
+dependency 'stahnma/epel', '>=0.0.1 <1.0.0'

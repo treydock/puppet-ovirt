@@ -1,0 +1,40 @@
+# action=setup
+[environment:default]
+OVESETUP_CORE/engineStop=none:None
+OVESETUP_DIALOG/confirmSettings=bool:True
+OVESETUP_DB/database=str:engine
+OVESETUP_DB/fixDbViolations=none:None
+OVESETUP_DB/secured=bool:False
+OVESETUP_DB/host=str:<%= @db_host %>
+OVESETUP_DB/user=str:<%= @db_user %>
+OVESETUP_DB/securedHostValidation=bool:False
+OVESETUP_DB/password=str:<%= @db_password %>
+OVESETUP_DB/port=int:<%= @db_port %>
+OVESETUP_SYSTEM/nfsConfigEnabled=bool:<%= @nfs_config_enabled ? "True" : "False" %>
+OVESETUP_SYSTEM/memCheckEnabled=bool:True
+OVESETUP_PKI/organization=str:<%= @organization %>
+<% if @nfs_config_enabled -%>
+OVESETUP_CONFIG/isoDomainName=str:<%= @iso_domain_name %>
+OVESETUP_CONFIG/isoDomainMountPoint=str:<%= @iso_domain_mount_point %>
+<% else -%>
+OVESETUP_CONFIG/isoDomainName=none:None
+OVESETUP_CONFIG/isoDomainMountPoint=none:None
+<% end -%>
+OVESETUP_CONFIG/adminPassword=str:<%= @admin_password %>
+OVESETUP_CONFIG/applicationMode=str:<%= @application_mode %>
+OVESETUP_CONFIG/firewallManager=str:<%= @firewall_manager %>
+OVESETUP_CONFIG/websocketProxyConfig=bool:<%= @websocket_proxy_config ? "True" : "False" %>
+OVESETUP_CONFIG/fqdn=str:<%= @fqdn %>
+OVESETUP_CONFIG/storageType=str:<%= @storage_type %>
+OVESETUP_PROVISIONING/postgresProvisioningEnabled=bool:True
+OVESETUP_APACHE/configureRootRedirection=bool:True
+OVESETUP_APACHE/configureSsl=bool:True
+OSETUP_RPMDISTRO/requireRollback=none:None
+OSETUP_RPMDISTRO/enableUpgrade=none:None
+OVESETUP_AIO/configure=none:None
+OVESETUP_AIO/storageDomainDir=none:None
+<% if @config_allinone -%>
+CONFIG_ALLINONE=yes
+STORAGE_PATH=<%= @local_storage_path %>
+SUPERUSER_PASS=<%= @superuser_pass %>
+<% end -%>

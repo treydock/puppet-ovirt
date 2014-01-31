@@ -1,0 +1,39 @@
+Cmnd_Alias VDSM_LIFECYCLE = \
+    /usr/sbin/dmidecode, \
+    /usr/share/vdsm/mk_sysprep_floppy, \
+    /sbin/service ksmtuned *, \
+    /sbin/service ksm *, \
+    /usr/share/vdsm/prepare-vmchannel
+Cmnd_Alias VDSM_STORAGE = /bin/mount, /bin/umount, \
+    /sbin/fsck -p *, \
+    /sbin/tune2fs -j *, \
+    /sbin/mkfs -q -j *, \
+    /usr/bin/kill, \
+    /bin/chown vdsm\:qemu *, \
+    /bin/chown vdsm\:kvm *, \
+    /bin/mv /etc/iscsi/iscsid.conf /etc/iscsi/iscsid.conf.*, \
+    /bin/mv /etc/multipath.conf *, \
+    /bin/cp * /etc/iscsi/iscsid.conf, \
+    /sbin/service iscsid *, \
+    /usr/bin/vdsm-tool service-restart multipathd, \
+    /usr/bin/vdsm-tool service-reload multipathd, \
+    /sbin/iscsiadm *, \
+    /sbin/lvm, \
+    /bin/cat /sys/block/*/device/../../*, \
+    /bin/cat /sys/devices/platform/host*, \
+    /bin/cat /etc/iscsi/iscsid.conf, \
+    /bin/cat /etc/multipath.conf, \
+    /bin/dd of=/sys/class/scsi_host/host*/scan, \
+    /bin/dd, \
+    /usr/sbin/persist /etc/multipath.conf, \
+    /usr/sbin/unpersist /etc/multipath.conf, \
+    /bin/cp /etc/multipath.conf *, \
+    /bin/cp * /etc/multipath.conf, \
+    /sbin/multipath, \
+    /usr/bin/setsid /usr/bin/ionice -c ? -n ? /bin/su vdsm -s /bin/sh -c /usr/libexec/vdsm/spmprotect.sh*, \
+    /sbin/service vdsmd *, \
+    /sbin/reboot -f
+
+vdsm  ALL=(ALL) NOPASSWD: VDSM_LIFECYCLE, VDSM_STORAGE
+Defaults:vdsm !requiretty
+Defaults:vdsm !syslog
