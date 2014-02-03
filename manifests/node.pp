@@ -25,15 +25,11 @@ class ovirt::node (
   Package['vdsm'] -> Vdsm_config<| |> -> File['/etc/vdsm/vdsm.conf']
   Vdsm_config<| |> ~> Service['vdsmd']
 
-  package { 'python-cpopen':
-    ensure  => installed,
-    name    => 'python-cpopen',
-  }->
   package { 'vdsm':
     ensure  => installed,
     name    => 'vdsm',
     before  => [ File['/etc/vdsm/vdsm.conf'],File['/etc/vdsm/vdsm.id'] ],
-    require => Yumrepo['ovirt-stable'],
+    require => Yumrepo['ovirt-release'],
   }
 
   file { '/etc/vdsm/vdsm.conf':

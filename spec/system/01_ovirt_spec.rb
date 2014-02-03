@@ -14,17 +14,22 @@ describe 'ovirt class:' do
       end
     end
 
-    describe yumrepo('ovirt-stable') do
-      it { should exist }
-      it { should be_enabled }
-    end
-
     describe yumrepo('glusterfs-epel') do
       it { should exist }
       it { should be_enabled }
     end
 
     describe yumrepo('glusterfs-noarch-epel') do
+      it { should exist }
+      it { should be_enabled }
+    end
+
+    describe yumrepo('ovirt-stable') do
+      it { should exist }
+      it { should be_enabled }
+    end
+
+    describe yumrepo('ovirt-3.3.3') do
       it { should exist }
       it { should be_enabled }
     end

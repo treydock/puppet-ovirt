@@ -10,19 +10,10 @@ describe 'ovirt::node' do
   it { should contain_class('sudo') }
 
   it do
-    should contain_package('python-cpopen').with({
-      'ensure'  => 'installed',
-      'name'    => 'python-cpopen',
-    })
-  end
-
-  it { should contain_package('python-cpopen').that_comes_before('Package[vdsm]') }
-
-  it do
     should contain_package('vdsm').with({
       'ensure'  => 'installed',
       'name'    => 'vdsm',
-      'require' => 'Yumrepo[ovirt-stable]',
+      'require' => 'Yumrepo[ovirt-release]',
     })
   end
 
