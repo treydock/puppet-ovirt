@@ -1,17 +1,15 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
-describe 'ovirt::node class:' do
-  context 'with default parameters' do
+describe 'ovirt::node class' do
+  context 'default parameters' do
     it 'should run successfully' do
       pp =<<-EOS
-        class { 'ovirt::node': }
+      class { 'sudo': purge => false }
+      class { 'ovirt::node': }
       EOS
   
-      puppet_apply(pp) do |r|
-       r.exit_code.should_not == 1
-       r.refresh
-       r.exit_code.should be_zero
-      end
+      apply_manifest(pp, :catch_failures => true)
+      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
     describe package('vdsm') do

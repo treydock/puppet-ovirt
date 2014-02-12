@@ -1,17 +1,14 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
-describe 'ovirt class:' do
-  context 'with default parameters' do
+describe 'ovirt class' do
+  context 'default parameters' do
     it 'should run successfully' do
       pp =<<-EOS
         class { 'ovirt': }
       EOS
   
-      puppet_apply(pp) do |r|
-       r.exit_code.should_not == 1
-       r.refresh
-       r.exit_code.should be_zero
-      end
+      apply_manifest(pp, :catch_failures => true)
+      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
     describe yumrepo('glusterfs-epel') do
