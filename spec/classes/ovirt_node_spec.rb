@@ -21,7 +21,6 @@ describe 'ovirt::node' do
   it { should contain_package('vdsm').that_comes_before('File[/etc/vdsm/vdsm.id]') }
   it { should contain_package('vdsm').that_comes_before('Vdsm_config[addresses/management_port]') }
   it { should contain_package('vdsm').that_comes_before('Vdsm_config[vars/ssl]') }
-  it { should contain_package('vdsm').that_comes_before('Vdsm_config[irs/nfs_mount_options]') }
 
   it do
     should contain_file('/etc/vdsm/vdsm.conf').only_with({
@@ -64,16 +63,14 @@ describe 'ovirt::node' do
     })
   end
 
-  it { should have_vdsm_config_resource_count(3) }
+  it { should have_vdsm_config_resource_count(2) }
 
   it { should contain_vdsm_config('addresses/management_port').with_value('54321') }
   it { should contain_vdsm_config('vars/ssl').with_value('true') }
-  it { should contain_vdsm_config('irs/nfs_mount_options').with_value('soft,nosharecache') }
 
   [
     'addresses/management_port',
     'vars/ssl',
-    'irs/nfs_mount_options',
   ].each do |name|
     it { should contain_vdsm_config(name).that_comes_before('File[/etc/vdsm/vdsm.conf]') }
     it { should contain_vdsm_config(name).that_notifies('Service[vdsmd]') }
@@ -86,7 +83,7 @@ describe 'ovirt::node' do
       }
     end
 
-    it { should have_vdsm_config_resource_count(4) }
+    it { should have_vdsm_config_resource_count(3) }
     it { should contain_vdsm_config('addresses/management_ip').with_value('0.0.0.0') }
     it { should contain_vdsm_config('addresses/management_ip').that_comes_before('File[/etc/vdsm/vdsm.conf]') }
     it { should contain_vdsm_config('addresses/management_ip').that_notifies('Service[vdsmd]') }

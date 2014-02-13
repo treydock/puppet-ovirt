@@ -17,6 +17,7 @@ RSpec.configure do |c|
   c.before :suite do
     # Install module and dependencies
     puppet_module_install(:source => proj_root, :module_name => 'ovirt')
+
     hosts.each do |host|
       if fact('osfamily') == 'RedHat'
         on host, puppet('module', 'install', 'stahnma/epel'), { :acceptable_exit_codes => [0,1] }

@@ -13,7 +13,6 @@
 class ovirt::node (
   $management_port    = '54321',
   $ssl                = 'true',
-  $nfs_mount_options  = 'soft,nosharecache',
   $vdsm_configs       = {}
 ) {
 
@@ -68,7 +67,6 @@ class ovirt::node (
 
   vdsm_config { 'addresses/management_port': value => $management_port }
   vdsm_config { 'vars/ssl': value => $ssl }
-  vdsm_config { 'irs/nfs_mount_options': value => $nfs_mount_options }
 
   if $vdsm_configs and !empty($vdsm_configs) {
     create_resources(vdsm_config, $vdsm_configs)

@@ -4,7 +4,7 @@ describe 'vdsm_config type' do
   context 'set irs/nfs_mount_options' do
     it 'should run successfully' do
       pp =<<-EOS
-      vdsm_config { 'irs/nfs_mount_options': value => 'soft,nosharecache' }
+      vdsm_config { 'addresses/management_ip': value => '0.0.0.0' }
       EOS
   
       apply_manifest(pp, :catch_failures => true)
@@ -12,7 +12,7 @@ describe 'vdsm_config type' do
     end
 
     describe file('/etc/vdsm/vdsm.conf') do
-      its(:content) { should match /\[irs\]\nnfs_mount_options = soft,nosharecache/ }
+      its(:content) { should match /^management_ip = 0.0.0.0/ }
     end
   end
 end
