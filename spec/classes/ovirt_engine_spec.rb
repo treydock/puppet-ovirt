@@ -87,7 +87,9 @@ describe 'ovirt::engine' do
       'refreshonly' => 'true',
       'path'        => '/usr/bin/:/bin/:/sbin:/usr/sbin',
       'command'     => "yes 'Yes' | engine-setup --config-append=/var/lib/ovirt-engine/setup/answers/ovirt-engine-setup.conf",
-      'subscribe'   => 'File[ovirt-engine-setup.conf]',
+      'timeout'     => '0',
+      'subscribe'   => 'Package[ovirt-engine]',
+      'require'     => 'File[ovirt-engine-setup.conf]',
     })
   end
 

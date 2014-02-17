@@ -7,6 +7,9 @@ group :development, :test do
   gem 'puppet-lint',            :require => false
   gem 'puppet-syntax',          :require => false
   gem 'travis-lint',            :require => false
+end
+
+group :development do
   gem 'beaker',                 :require => false
   gem 'beaker-rspec',           :require => false
   gem "puppet-blacksmith",      :require => false

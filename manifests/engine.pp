@@ -155,6 +155,7 @@ class ovirt::engine (
     refreshonly => true,
     path        => '/usr/bin/:/bin/:/sbin:/usr/sbin',
     command     => "yes 'Yes' | engine-setup --config-append=${answers_file}",
+    timeout     => 0,
     subscribe   => Package['ovirt-engine'],
     require     => File['ovirt-engine-setup.conf'],
   }
