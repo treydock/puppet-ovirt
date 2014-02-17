@@ -103,7 +103,7 @@ class ovirt::engine (
 
   include ovirt
 
-  $answers_file='/var/lib/ovirt-engine/setup/answers/ovirt-engine-setup.conf'
+  $answers_file = '/var/lib/ovirt-engine/setup/answers/ovirt-engine-setup.conf'
 
   validate_re($application_mode, ['^both$','^virt$','^gluster$'])
   validate_re($storage_type, ['^nfs$','^fs$','^iscsi$','^posixfs$'])
@@ -155,7 +155,8 @@ class ovirt::engine (
     refreshonly => true,
     path        => '/usr/bin/:/bin/:/sbin:/usr/sbin',
     command     => "yes 'Yes' | engine-setup --config-append=${answers_file}",
-    subscribe   => File['ovirt-engine-setup.conf'],
+    subscribe   => Package['ovirt-engine'],
+    require     => File['ovirt-engine-setup.conf'],
   }
 }
 
