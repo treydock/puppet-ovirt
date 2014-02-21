@@ -10,9 +10,9 @@ group :development, :test do
 end
 
 group :development do
-  gem 'beaker',                 :require => false
+  gem 'beaker',                 :require => false, :git => 'https://github.com/puppetlabs/beaker', :ref => 'dbac20fe9'
   gem 'beaker-rspec',           :require => false
-  gem "puppet-blacksmith",      :require => false
+  gem 'vagrant-wrapper',        :require => false
 end
 
 if puppetversion = ENV['PUPPET_GEM_VERSION']
