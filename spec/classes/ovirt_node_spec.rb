@@ -13,7 +13,7 @@ describe 'ovirt::node' do
     should contain_package('vdsm').with({
       'ensure'  => 'installed',
       'name'    => 'vdsm',
-      'require' => 'Yumrepo[ovirt-release]',
+      'require' => 'Package[ovirt-release]',
     })
   end
 

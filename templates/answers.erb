@@ -2,7 +2,7 @@
 [environment:default]
 OVESETUP_CORE/engineStop=none:None
 OVESETUP_DIALOG/confirmSettings=bool:True
-OVESETUP_DB/database=str:engine
+OVESETUP_DB/database=str:<%= @db_name %>
 OVESETUP_DB/fixDbViolations=none:None
 OVESETUP_DB/secured=bool:False
 OVESETUP_DB/host=str:<%= @db_host %>
@@ -23,10 +23,11 @@ OVESETUP_CONFIG/isoDomainMountPoint=none:None
 OVESETUP_CONFIG/adminPassword=str:<%= @admin_password %>
 OVESETUP_CONFIG/applicationMode=str:<%= @application_mode %>
 OVESETUP_CONFIG/firewallManager=str:<%= @firewall_manager %>
+OVESETUP_CONFIG/updateFirewall=bool:<%= @update_firewall ? "True" : "False" %>
 OVESETUP_CONFIG/websocketProxyConfig=bool:<%= @websocket_proxy_config ? "True" : "False" %>
 OVESETUP_CONFIG/fqdn=str:<%= @fqdn %>
 OVESETUP_CONFIG/storageType=str:<%= @storage_type %>
-OVESETUP_PROVISIONING/postgresProvisioningEnabled=bool:True
+OVESETUP_PROVISIONING/postgresProvisioningEnabled=bool:<%= @postgres_provisioning_enabled ? "True" : "False" %>
 OVESETUP_APACHE/configureRootRedirection=bool:True
 OVESETUP_APACHE/configureSsl=bool:True
 OSETUP_RPMDISTRO/requireRollback=none:None

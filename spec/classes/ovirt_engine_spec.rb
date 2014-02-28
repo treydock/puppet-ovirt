@@ -12,7 +12,7 @@ describe 'ovirt::engine' do
   it do
     should contain_package('ovirt-engine').with({
       'ensure'    => 'installed',
-      'require'   => 'Yumrepo[ovirt-release]',
+      'require'   => 'Package[ovirt-release]',
       'before'    => 'File[ovirt-engine-setup.conf]',
     })
   end
@@ -39,7 +39,7 @@ describe 'ovirt::engine' do
       'OVESETUP_DB/host=str:localhost',
       'OVESETUP_DB/user=str:engine',
       'OVESETUP_DB/securedHostValidation=bool:False',
-      'OVESETUP_DB/password=str:dbpassword',
+      'OVESETUP_DB/password=str:engine',
       'OVESETUP_DB/port=int:5432',
       'OVESETUP_SYSTEM/nfsConfigEnabled=bool:True',
       'OVESETUP_SYSTEM/memCheckEnabled=bool:True',
@@ -49,10 +49,11 @@ describe 'ovirt::engine' do
       'OVESETUP_CONFIG/adminPassword=str:admin',
       'OVESETUP_CONFIG/applicationMode=str:both',
       'OVESETUP_CONFIG/firewallManager=str:iptables',
+      'OVESETUP_CONFIG/updateFirewall=bool:False',
       'OVESETUP_CONFIG/websocketProxyConfig=bool:True',
       'OVESETUP_CONFIG/fqdn=str:foo.example.com',
       'OVESETUP_CONFIG/storageType=str:nfs',
-      'OVESETUP_PROVISIONING/postgresProvisioningEnabled=bool:True',
+      'OVESETUP_PROVISIONING/postgresProvisioningEnabled=bool:False',
       'OVESETUP_APACHE/configureRootRedirection=bool:True',
       'OVESETUP_APACHE/configureSsl=bool:True',
       'OSETUP_RPMDISTRO/requireRollback=none:None',
@@ -68,6 +69,7 @@ describe 'ovirt::engine' do
       'enable'      => 'true',
       'hasstatus'   => 'true',
       'hasrestart'  => 'true',
+      'require'     => nil,
       'subscribe'   => 'Exec[engine-setup]',
     })
   end
@@ -78,6 +80,7 @@ describe 'ovirt::engine' do
       'enable'      => 'true',
       'hasstatus'   => 'true',
       'hasrestart'  => 'true',
+      'require'     => nil,
       'subscribe'   => 'Exec[engine-setup]',
     })
   end
@@ -121,6 +124,20 @@ describe 'ovirt::engine' do
         'STORAGE_PATH=/foo',
         'SUPERUSER_PASS=bar',
       ])
+    end
+  end
+
+  # Test boolean validation
+  [
+    'manage_postgresql_server',
+    'config_allinone',
+    'nfs_config_enabled',
+    'manage_firewall',
+    'websocket_proxy_config',
+  ].each do |param|
+    context "with #{param} => 'foo'" do
+      let(:params) {{ param.to_sym => 'foo' }}
+      it { expect { should create_class('ovirt::engine') }.to raise_error(Puppet::Error, /is not a boolean/) }
     end
   end
 end

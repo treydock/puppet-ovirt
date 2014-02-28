@@ -28,7 +28,7 @@ class ovirt::node (
     ensure  => installed,
     name    => 'vdsm',
     before  => [ File['/etc/vdsm/vdsm.conf'],File['/etc/vdsm/vdsm.id'] ],
-    require => Yumrepo['ovirt-release'],
+    require => Package['ovirt-release'],
   }
 
   file { '/etc/vdsm/vdsm.conf':

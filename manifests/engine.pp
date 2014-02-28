@@ -83,6 +83,7 @@
 # Copyright 2014 Trey Dockendorf
 #
 class ovirt::engine (
+  $manage_postgresql_server = true,
   $config_allinone          = false,
   $local_storage_path       = undef,
   $superuser_pass           = undef,
@@ -93,26 +94,100 @@ class ovirt::engine (
   $iso_domain_name          = 'ISO_DOMAIN',
   $iso_domain_mount_point   = '/var/lib/exports/iso',
   $admin_password           = 'admin',
+  $db_name                  = 'engine',
   $db_user                  = 'engine',
-  $db_password              = 'dbpassword',
+  $db_password              = 'engine',
   $db_host                  = 'localhost',
   $db_port                  = '5432',
   $firewall_manager         = $ovirt::params::firewall_manager,
-  $websocket_proxy_config   = true
+  $manage_firewall          = true,
+  $websocket_proxy_config   = true,
+  $run_engine_setup         = true
 ) inherits ovirt::params {
 
   include ovirt
 
   $answers_file = '/var/lib/ovirt-engine/setup/answers/ovirt-engine-setup.conf'
 
+  validate_bool($manage_postgresql_server)
   validate_re($application_mode, ['^both$','^virt$','^gluster$'])
   validate_re($storage_type, ['^nfs$','^fs$','^iscsi$','^posixfs$'])
+  validate_bool($config_allinone)
   validate_bool($nfs_config_enabled)
+  validate_bool($manage_firewall)
   validate_bool($websocket_proxy_config)
+
+  if $run_engine_setup {
+    $postgresql_server_before = Exec['engine-setup']
+    $service_subscribe        = Exec['engine-setup']
+    $service_require          = undef
+  } else {
+    $postgresql_server_before = undef
+    $service_subscribe        = undef
+    $service_require          = Package['ovirt-engine']
+  }
+
+  if $manage_postgresql_server {
+    $postgres_provisioning_enabled = false
+
+    class { 'postgresql::server':
+      manage_firewall => $manage_firewall,
+      before          => $postgresql_server_before,
+    }
+
+    postgresql::server::config_entry { 'max_connections':
+      value => 150,
+    }
+
+    postgresql::server::pg_hba_rule { 'allow engine access on 0.0.0.0/0 using md5':
+      type        => 'host',
+      database    => $db_name,
+      user        => $db_user,
+      address     => '0.0.0.0/0',
+      auth_method => 'md5',
+      order       => '010',
+    }
+
+    postgresql::server::pg_hba_rule { 'allow engine access on ::0/0 using md5':
+      type        => 'host',
+      database    => $db_name,
+      user        => $db_user,
+      address     => '::0/0',
+      auth_method => 'md5',
+      order       => '011',
+    }
+
+    postgresql::server::role { $db_user:
+      password_hash => postgresql_password($db_user, $db_password),
+      before        => Postgresql::Server::Database[$db_name],
+    }
+
+    postgresql::server::database { $db_name:
+      encoding  => 'UTF8',
+      locale    => 'en_US.UTF-8',
+      template  => 'template0',
+      owner     => $db_user,
+      before    => $postgresql_server_before,
+    }
+  } else {
+    $postgres_provisioning_enabled = true
+  }
+
+  if $manage_firewall {
+    $update_firewall = false
+
+    firewall { '100 allow ovirt-websocket-proxy':
+      port    => '6100',
+      proto   => 'tcp',
+      action  => 'accept',
+    }
+  } else {
+    $update_firewall = true
+  }
 
   package { 'ovirt-engine':
     ensure  => installed,
-    require => Yumrepo['ovirt-release'],
+    require => Package['ovirt-release'],
     before  => File['ovirt-engine-setup.conf'],
   }
 
@@ -138,7 +213,8 @@ class ovirt::engine (
     enable      => true,
     hasstatus   => true,
     hasrestart  => true,
-    subscribe   => Exec['engine-setup'],
+    require     => $service_require,
+    subscribe   => $service_subscribe,
   }
 
   if $websocket_proxy_config {
@@ -147,7 +223,8 @@ class ovirt::engine (
       enable      => true,
       hasstatus   => true,
       hasrestart  => true,
-      subscribe   => Exec['engine-setup'],
+      require     => $service_require,
+      subscribe   => $service_subscribe,
     }
   }
 
