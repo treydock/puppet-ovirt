@@ -14,15 +14,14 @@ class ovirt::params {
 
   case $::osfamily {
     'RedHat': {
+      $ovirt_release_url    = 'http://resources.ovirt.org/releases/ovirt-release.noarch.rpm'
+
       case $::operatingsystem {
         'Fedora': {
-          $ovirt_release_url              = 'http://resources.ovirt.org/releases/ovirt-release-fedora.noarch.rpm'
-          $firewall_manager               = 'firewalld'
-
+          $firewall_manager = 'firewalld'
         }
         default: {
-          $ovirt_release_url              = 'http://resources.ovirt.org/releases/ovirt-release-el.noarch.rpm'
-          $firewall_manager               = 'iptables'
+          $firewall_manager = 'iptables'
         }
       }
     }

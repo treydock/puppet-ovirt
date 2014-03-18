@@ -5,7 +5,7 @@
 ##### START CONFIG ###################################################
 
 DIR=<%= @backup_dir %>
-ROTATE=<%= [ Integer(@backup_rotate) - 1, 0 ].max %>
+ROTATE=<%= [ @backup_rotate.to_i - 1, 0 ].max %>
 
 PREFIX=engine_backup
 
