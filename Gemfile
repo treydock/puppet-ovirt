@@ -7,6 +7,8 @@ group :development, :test do
   gem 'puppet-lint',            :require => false
   gem 'puppet-syntax',          :require => false
   gem 'travis-lint',            :require => false
+  gem 'simplecov',              :require => false
+  gem 'coveralls',              :require => false
 end
 
 group :development do
