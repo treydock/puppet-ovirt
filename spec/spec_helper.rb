@@ -29,7 +29,7 @@ shared_context :defaults do
       :architecture           => 'x86_64',
       :domain                 => 'example.com',
       :fqdn                   => 'foo.example.com',
-      :concat_basedir         => tmpfilename('ovirt'),
+      :concat_basedir         => '/tmp/ovirt',
     }
   end
 end

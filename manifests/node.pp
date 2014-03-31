@@ -13,6 +13,7 @@
 class ovirt::node (
   $management_port    = '54321',
   $ssl                = 'true',
+  $manage_firewall    = true,
   $vdsm_configs       = {}
 ) {
 
@@ -23,6 +24,10 @@ class ovirt::node (
 
   Package['vdsm'] -> Vdsm_config<| |> -> File['/etc/vdsm/vdsm.conf']
   Vdsm_config<| |> ~> Service['vdsmd']
+
+  if $manage_firewall {
+    include ovirt::node::firewall
+  }
 
   package { 'vdsm':
     ensure  => installed,

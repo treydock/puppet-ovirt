@@ -8,6 +8,7 @@ describe 'ovirt::node' do
   it { should create_class('ovirt::node') }
   it { should contain_class('ovirt') }
   it { should contain_class('sudo') }
+  it { should contain_class('ovirt::node::firewall') }
 
   it do
     should contain_package('vdsm').with({
@@ -74,6 +75,11 @@ describe 'ovirt::node' do
   ].each do |name|
     it { should contain_vdsm_config(name).that_comes_before('File[/etc/vdsm/vdsm.conf]') }
     it { should contain_vdsm_config(name).that_notifies('Service[vdsmd]') }
+  end
+
+  context 'when manage_firewall => false' do
+    let(:params) {{ :manage_firewall => false }}
+    it { should_not contain_class('ovirt::node::firewall') }
   end
 
   context 'when vdsm_configs is Hash' do

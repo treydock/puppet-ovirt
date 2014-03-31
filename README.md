@@ -1,4 +1,6 @@
-# ovirt [![Build Status](https://travis-ci.org/treydock/puppet-ovirt.png)](https://travis-ci.org/treydock/puppet-ovirt)
+# puppet-ovirt
+
+[![Build Status](https://travis-ci.org/treydock/puppet-ovirt.png)](https://travis-ci.org/treydock/puppet-ovirt)
 
 The ovirt module lets you manage oVirt Engine and Nodes.
 
@@ -11,11 +13,9 @@ The ovirt module lets you manage oVirt Engine and Nodes.
 
 Tested using the following oVirt versions
 
-* 3.3.2
+* 3.3.x
 
-## Support
-
-Tested using
+Tested using the following Operating Systems
 
 * CentOS 6.5
 
@@ -113,3 +113,9 @@ Run the tests from root of the source code:
 You can also run acceptance tests:
 
     bundle exec rake acceptance
+
+## TODO
+
+* Conditionally manage the different ovirt node firewall openings
+* Once puppetlabs-firewall supports physdev ([MODULES-20](https://tickets.puppetlabs.com/browse/MODULES-20)) manage all firewall rules created by ovirt-engine
+* Manage yumrepo resources instead of the ovirt-release RPM
