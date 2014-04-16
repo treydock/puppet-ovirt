@@ -4,7 +4,7 @@ describe 'ovirt::node class' do
   context 'default parameters' do
     it 'should run successfully' do
       pp =<<-EOS
-      class { 'sudo': purge => false }
+      class { 'sudo': purge => false, config_file_replace => false }
       class { 'ovirt::node': }
       EOS
   

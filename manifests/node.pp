@@ -17,6 +17,7 @@ class ovirt::node (
   $vdsm_configs       = {}
 ) {
 
+  validate_bool($manage_firewall)
   validate_hash($vdsm_configs)
 
   include ovirt

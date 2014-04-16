@@ -11,22 +11,11 @@ describe 'ovirt class' do
       expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
-    describe yumrepo('glusterfs-epel') do
-      it { should exist }
-      it { should be_enabled }
-    end
-
-    describe yumrepo('glusterfs-noarch-epel') do
-      it { should exist }
-      it { should be_enabled }
+    describe package('ovirt-release') do
+      it { should be_installed }
     end
 
     describe yumrepo('ovirt-stable') do
-      it { should exist }
-      it { should be_enabled }
-    end
-
-    describe yumrepo('ovirt-3.3.3') do
       it { should exist }
       it { should be_enabled }
     end

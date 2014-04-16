@@ -99,4 +99,14 @@ describe 'ovirt::node' do
     let(:params) {{ :vdsm_configs => "foo" }}
     it { expect { should create_class('ovirt::node') }.to raise_error(Puppet::Error, /is not a Hash/) }
   end
+
+  # Test boolean validation
+  [
+    'manage_firewall',
+  ].each do |param|
+    context "with #{param} => 'foo'" do
+      let(:params) {{ param.to_sym => 'foo' }}
+      it { expect { should create_class('ovirt::node') }.to raise_error(Puppet::Error, /is not a boolean/) }
+    end
+  end
 end
