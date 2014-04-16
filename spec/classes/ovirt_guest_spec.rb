@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'ovirt::guest' do
   include_context :defaults
 
-  let(:facts) { default_facts }
+  let(:facts) { default_facts.merge({:manufacturer => 'oVirt'}) }
 
   it { should create_class('ovirt::guest') }
   it { should contain_class('ovirt::params') }

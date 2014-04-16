@@ -21,36 +21,44 @@ class ovirt::guest (
   $qemu_guest_agent_enable = true,
 ) inherits ovirt::params {
 
-  include epel
-
   validate_bool($manage_qemu_guest_agent)
 
-  if $manage_qemu_guest_agent {
-    ensure_packages(['qemu-guest-agent'])
+  case $::manufacturer {
+    'oVirt': {
+      include epel
 
-    service { 'qemu-ga':
-      ensure      => $qemu_guest_agent_ensure,
-      enable      => $qemu_guest_agent_enable,
-      name        => 'qemu-ga',
-      hasstatus   => true,
-      hasrestart  => true,
-      require     => Package['qemu-guest-agent'],
+      if $manage_qemu_guest_agent {
+        ensure_packages(['qemu-guest-agent'])
+
+        service { 'qemu-ga':
+          ensure      => $qemu_guest_agent_ensure,
+          enable      => $qemu_guest_agent_enable,
+          name        => 'qemu-ga',
+          hasstatus   => true,
+          hasrestart  => true,
+          require     => Package['qemu-guest-agent'],
+        }
+      }
+
+      package { 'ovirt-guest-agent':
+        ensure  => $agent_package_ensure,
+        name    => $agent_package_name,
+        before  => Service['ovirt-guest-agent'],
+        require => Yumrepo['epel'],
+      }
+
+      service { 'ovirt-guest-agent':
+        ensure      => $agent_service_ensure,
+        enable      => $agent_service_enable,
+        name        => $agent_service_name,
+        hasstatus   => true,
+        hasrestart  => true,
+      }
     }
+    # If we are not oVirt, do not do anything.
+    default: { }
   }
 
-  package { 'ovirt-guest-agent':
-    ensure  => $agent_package_ensure,
-    name    => $agent_package_name,
-    before  => Service['ovirt-guest-agent'],
-    require => Yumrepo['epel'],
-  }
 
-  service { 'ovirt-guest-agent':
-    ensure      => $agent_service_ensure,
-    enable      => $agent_service_enable,
-    name        => $agent_service_name,
-    hasstatus   => true,
-    hasrestart  => true,
-  }
 
 }
