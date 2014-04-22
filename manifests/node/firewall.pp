@@ -2,19 +2,37 @@
 #
 class ovirt::node::firewall {
 
-  resources { 'firewall':
-    purge => false,
+  include ovirt::node
+
+  firewall { '100 vdsm':
+    dport   => $ovirt::node::management_port,
+    proto   => 'tcp',
+    action  => 'accept',
+    chain   => 'INPUT',
   }
-
-  Firewall {
-    before  => Class['ovirt::node::firewall::post'],
-    require => Class['ovirt::node::firewall::pre'],
+  firewall { '101 snmp':
+    dport   => '161',
+    proto   => 'udp',
+    action  => 'accept',
+    chain   => 'INPUT',
   }
-
-  class { 'ovirt::node::firewall::pre': }
-  class { 'ovirt::node::firewall::app': }
-  class { 'ovirt::node::firewall::post': }
-
-  class { '::firewall': }
+  firewall { '102 libvirt tls':
+    dport   => '16514',
+    proto   => 'tcp',
+    action  => 'accept',
+    chain   => 'INPUT',
+  }
+  firewall { '103 guest consoles':
+    dport   => '5900-6923',
+    proto   => 'tcp',
+    action  => 'accept',
+    chain   => 'INPUT',
+  }
+  firewall { '104 migration':
+    dport   => '49152-49216',
+    proto   => 'tcp',
+    action  => 'accept',
+    chain   => 'INPUT',
+  }
 
 }
