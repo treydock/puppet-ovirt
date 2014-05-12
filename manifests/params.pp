@@ -14,7 +14,7 @@ class ovirt::params {
 
   case $::osfamily {
     'RedHat': {
-      $ovirt_release_url        = 'http://resources.ovirt.org/releases/ovirt-release.noarch.rpm'
+      $ovirt_release_url        = 'http://resources.ovirt.org/pub/yum-repo/ovirt-release34.rpm'
       $guest_agent_package_name = 'ovirt-guest-agent'
       $guest_agent_service_name = 'ovirt-guest-agent'
       case $::operatingsystem {

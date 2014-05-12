@@ -12,7 +12,7 @@ describe 'ovirt' do
   it do
     should contain_package('ovirt-release').with({
       'ensure'    => 'installed',
-      'source'    => 'http://resources.ovirt.org/releases/ovirt-release.noarch.rpm',
+      'source'    => 'http://resources.ovirt.org/pub/yum-repo/ovirt-release34.rpm',
       'require'   => 'Yumrepo[epel]',
       'provider'  => 'rpm',
     })
@@ -20,6 +20,6 @@ describe 'ovirt' do
 
   context 'when operatingsystem => "Fedora"' do
     let(:facts) { default_facts.merge({ :operatingsystem => "Fedora" }) }
-    it { should contain_package('ovirt-release').with_source('http://resources.ovirt.org/releases/ovirt-release.noarch.rpm') }
+    it { should contain_package('ovirt-release').with_source('http://resources.ovirt.org/pub/yum-repo/ovirt-release34.rpm') }
   end
 end
