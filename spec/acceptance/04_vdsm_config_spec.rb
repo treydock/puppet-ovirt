@@ -4,7 +4,7 @@ describe 'vdsm_config type' do
   context 'set irs/nfs_mount_options' do
     it 'should run successfully' do
       pp =<<-EOS
-      vdsm_config { 'addresses/management_ip': value => '0.0.0.0' }
+        vdsm_config { 'addresses/management_ip': value => '0.0.0.0' }
       EOS
   
       apply_manifest(pp, :catch_failures => true)

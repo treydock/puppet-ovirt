@@ -4,6 +4,7 @@ describe 'ovirt::engine class' do
   context 'default parameters' do
     it 'should run successfully' do
       pp =<<-EOS
+        class { 'ovirt': }
         class { 'ovirt::engine': }
       EOS
   

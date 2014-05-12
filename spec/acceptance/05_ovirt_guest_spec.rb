@@ -4,7 +4,7 @@ describe 'ovirt::guest class' do
   context 'default parameters' do
     it 'should run successfully' do
       pp =<<-EOS
-      class { 'ovirt::guest': }
+        class { 'ovirt::guest': }
       EOS
   
       apply_manifest(pp, :catch_failures => true)

@@ -9,8 +9,8 @@ project_page 'http://github.com/treydock/puppet-ovirt'
 
 ## Add dependencies, if any:
 dependency 'puppetlabs/stdlib', '>=3.2.0 <5.0.0'
-dependency 'puppetlabs/firewall', '>=1.0.0 <2.0.0'
-dependency 'puppetlabs/inifile', '>=1.0.0 <2.0.0'
-dependency 'puppetlabs/postgresql', '>=3.0.0 <4.0.0'
-dependency 'saz/sudo', '>=2.0.0 <4.0.0'
-dependency 'stahnma/epel', '>=0.0.1 <1.0.0'
+dependency 'puppetlabs/firewall', '1.x'
+dependency 'puppetlabs/inifile', '1.x'
+dependency 'puppetlabs/postgresql', '3.x'
+dependency 'saz/sudo', '3.x'
+dependency 'stahnma/epel', '0.x'

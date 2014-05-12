@@ -4,8 +4,9 @@ describe 'ovirt::node class' do
   context 'default parameters' do
     it 'should run successfully' do
       pp =<<-EOS
-      class { 'sudo': purge => false, config_file_replace => false }
-      class { 'ovirt::node': }
+        class { 'sudo': purge => false, config_file_replace => false }
+        class { 'ovirt': }
+        class { 'ovirt::node': }
       EOS
   
       apply_manifest(pp, :catch_failures => true)

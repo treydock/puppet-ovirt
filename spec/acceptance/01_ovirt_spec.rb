@@ -11,11 +11,11 @@ describe 'ovirt class' do
       expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
-    describe package('ovirt-release') do
+    describe package('ovirt-release34') do
       it { should be_installed }
     end
 
-    describe yumrepo('ovirt-stable') do
+    describe yumrepo('ovirt-3.4-stable') do
       it { should exist }
       it { should be_enabled }
     end
