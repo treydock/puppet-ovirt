@@ -102,10 +102,11 @@ describe 'ovirt::node' do
 
   # Test boolean validation
   [
-    'manage_firewall',
+    :manage_firewall,
+    :storeconfigs_enabled,
   ].each do |param|
     context "with #{param} => 'foo'" do
-      let(:params) {{ param.to_sym => 'foo' }}
+      let(:params) {{ param => 'foo' }}
       it { expect { should create_class('ovirt::node') }.to raise_error(Puppet::Error, /is not a boolean/) }
     end
   end

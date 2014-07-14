@@ -11,13 +11,15 @@
 # Copyright 2014 Trey Dockendorf
 #
 class ovirt::node (
-  $management_port    = '54321',
-  $ssl                = 'true',
-  $manage_firewall    = true,
-  $vdsm_configs       = {}
+  $management_port      = '54321',
+  $ssl                  = 'true',
+  $manage_firewall      = true,
+  $storeconfigs_enabled = false,
+  $vdsm_configs         = {}
 ) {
 
   validate_bool($manage_firewall)
+  validate_bool($storeconfigs_enabled)
   validate_hash($vdsm_configs)
 
   include ovirt
@@ -28,6 +30,15 @@ class ovirt::node (
 
   if $manage_firewall {
     include ovirt::node::firewall
+  }
+
+  if $storeconfigs_enabled and $::ipaddress_ovirtmgmt {
+    @@host { $::fqdn:
+      ensure        => 'present',
+      host_aliases  => [$::hostname],
+      ip            => $::ipaddress_ovirtmgmt,
+      tag           => 'ovirt::node',
+    }
   }
 
   package { 'vdsm':

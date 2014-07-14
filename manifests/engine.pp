@@ -102,7 +102,8 @@ class ovirt::engine (
   $firewall_manager         = $ovirt::params::firewall_manager,
   $manage_firewall          = true,
   $websocket_proxy_config   = true,
-  $run_engine_setup         = true
+  $run_engine_setup         = true,
+  $storeconfigs_enabled     = false
 ) inherits ovirt::params {
 
   include ovirt
@@ -116,6 +117,7 @@ class ovirt::engine (
   validate_bool($nfs_config_enabled)
   validate_bool($manage_firewall)
   validate_bool($websocket_proxy_config)
+  validate_bool($storeconfigs_enabled)
 
   if $run_engine_setup {
     $postgresql_server_before = Exec['engine-setup']
@@ -236,5 +238,8 @@ class ovirt::engine (
     subscribe   => Package['ovirt-engine'],
     require     => File['ovirt-engine-setup.conf'],
   }
-}
 
+  if $storeconfigs_enabled {
+    Host <<| tag == 'ovirt::node' |>>
+  }
+}

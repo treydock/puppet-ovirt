@@ -129,11 +129,12 @@ describe 'ovirt::engine' do
 
   # Test boolean validation
   [
-    'manage_postgresql_server',
-    'config_allinone',
-    'nfs_config_enabled',
-    'manage_firewall',
-    'websocket_proxy_config',
+    :manage_postgresql_server,
+    :config_allinone,
+    :nfs_config_enabled,
+    :manage_firewall,
+    :websocket_proxy_config,
+    :storeconfigs_enabled,
   ].each do |param|
     context "with #{param} => 'foo'" do
       let(:params) {{ param.to_sym => 'foo' }}
