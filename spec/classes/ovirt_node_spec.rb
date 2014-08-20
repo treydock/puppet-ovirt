@@ -10,94 +10,36 @@ describe 'ovirt::node' do
   it { should contain_class('sudo') }
   it { should contain_class('ovirt::node::firewall') }
 
-  it do
-    should contain_package('vdsm').with({
-      'ensure'  => 'installed',
-      'name'    => 'vdsm',
-      'require' => 'Package[ovirt-release]',
-    })
-  end
-
-  it { should contain_package('vdsm').that_comes_before('File[/etc/vdsm/vdsm.conf]') }
-  it { should contain_package('vdsm').that_comes_before('File[/etc/vdsm/vdsm.id]') }
-  it { should contain_package('vdsm').that_comes_before('Vdsm_config[addresses/management_port]') }
-  it { should contain_package('vdsm').that_comes_before('Vdsm_config[vars/ssl]') }
+  it { should have_vdsm_config_resource_count(0) }
 
   it do
-    should contain_file('/etc/vdsm/vdsm.conf').only_with({
-      'path'    => '/etc/vdsm/vdsm.conf',
-      'owner'   => 'root',
-      'group'   => 'root',
-      'mode'    => '0644',
-    })
+    should contain_file('/etc/vdsm') \
+      .with_ensure('directory') \
+      .that_comes_before('File[/etc/vdsm/vdsm.id]')
   end
 
   it do
     should contain_file('/etc/vdsm/vdsm.id').only_with({
-      'ensure'  => 'present',
-      'path'    => '/etc/vdsm/vdsm.id',
-      'source'  => '/proc/sys/kernel/random/uuid',
-      'owner'   => 'root',
-      'group'   => 'root',
-      'mode'    => '0444',
-      'replace' => 'false',
-      'before'  => 'Service[vdsmd]',
-    })
-  end
-
-  it do
-    should contain_service('vdsmd').only_with({
-      'ensure'      => 'running',
-      'name'        => 'vdsmd',
-      'enable'      => 'true',
-      'hasstatus'   => 'true',
-      'hasrestart'  => 'true',
-      'subscribe'   => 'File[/etc/vdsm/vdsm.conf]',
+      :ensure   => 'file',
+      :path     => '/etc/vdsm/vdsm.id',
+      :source   => '/proc/sys/kernel/random/uuid',
+      :owner    => 'root',
+      :group    => 'root',
+      :mode     => '0444',
+      :replace  => 'false',
     })
   end
 
   it do
     should contain_sudo__conf('vdsm').with({
-      'ensure'    => 'present',
-      'priority'  => '50',
-      'before'    => 'Service[vdsmd]',
+      :ensure     => 'present',
+      :priority   => '50',
     })
-  end
-
-  it { should have_vdsm_config_resource_count(2) }
-
-  it { should contain_vdsm_config('addresses/management_port').with_value('54321') }
-  it { should contain_vdsm_config('vars/ssl').with_value('true') }
-
-  [
-    'addresses/management_port',
-    'vars/ssl',
-  ].each do |name|
-    it { should contain_vdsm_config(name).that_comes_before('File[/etc/vdsm/vdsm.conf]') }
-    it { should contain_vdsm_config(name).that_notifies('Service[vdsmd]') }
   end
 
   context 'when manage_firewall => false' do
     let(:params) {{ :manage_firewall => false }}
     it { should_not contain_class('ovirt::node::firewall') }
-  end
-
-  context 'when vdsm_configs is Hash' do
-    let :params do
-      {
-        :vdsm_configs => {'addresses/management_ip' => {'value' => '0.0.0.0'}},
-      }
-    end
-
-    it { should have_vdsm_config_resource_count(3) }
-    it { should contain_vdsm_config('addresses/management_ip').with_value('0.0.0.0') }
-    it { should contain_vdsm_config('addresses/management_ip').that_comes_before('File[/etc/vdsm/vdsm.conf]') }
-    it { should contain_vdsm_config('addresses/management_ip').that_notifies('Service[vdsmd]') }
-  end
-
-  context 'when vdsm_configs is "foo"' do
-    let(:params) {{ :vdsm_configs => "foo" }}
-    it { expect { should create_class('ovirt::node') }.to raise_error(Puppet::Error, /is not a Hash/) }
   end
 
   # Test boolean validation

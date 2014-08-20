@@ -22,14 +22,15 @@ shared_context :defaults do
 
   let :default_facts do
     {
-      :kernel                 => 'Linux',
-      :osfamily               => 'RedHat',
-      :operatingsystem        => 'CentOS',
-      :operatingsystemrelease => '6.4',
-      :architecture           => 'x86_64',
-      :domain                 => 'example.com',
-      :fqdn                   => 'foo.example.com',
-      :concat_basedir         => '/tmp/ovirt',
+      :kernel                     => 'Linux',
+      :osfamily                   => 'RedHat',
+      :operatingsystem            => 'CentOS',
+      :operatingsystemrelease     => '6.5',
+      :operatingsystemmajrelease  => '6',
+      :architecture               => 'x86_64',
+      :domain                     => 'example.com',
+      :fqdn                       => 'foo.example.com',
+      :concat_basedir             => '/tmp/ovirt',
     }
   end
 end
