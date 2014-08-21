@@ -55,7 +55,7 @@ class ovirt::repo {
 
   yumrepo { 'ovirt-jpackage-6.0-generic':
     ensure      => 'present',
-    name        => "ovirt-3.4-jpackage-6.0-generic",
+    name        => "ovirt-${::ovirt::version}-jpackage-6.0-generic",
     descr       => 'JPackage 6.0, for generic',
     enabled     => '1',
     gpgcheck    => '1',
@@ -66,12 +66,12 @@ class ovirt::repo {
 
   yumrepo { 'ovirt-stable':
     ensure              => 'present',
-    name                => "ovirt-3.4-stable",
-    descr               => "Latest oVirt 3.4 Release",
+    name                => "ovirt-${::ovirt::version}-stable",
+    descr               => "Latest oVirt ${::ovirt::version} Release",
     enabled             => '1',
     gpgcheck            => '1',
     gpgkey              => 'file:///etc/pki/rpm-gpg/RPM-GPG-ovirt',
-    #baseurl             => "http://resources.ovirt.org/pub/ovirt-${::ovirt::version}/rpm/el${::operatingsystemmajrelease}/",
+#    baseurl            => "http://resources.ovirt.org/pub/ovirt-${::ovirt::version}/rpm/el${::operatingsystemmajrelease}/",
     mirrorlist          => "http://resources.ovirt.org/pub/yum-repo/mirrorlist-ovirt-${::ovirt::version}-el${::operatingsystemmajrelease}",
     skip_if_unavailable => '1',
   }

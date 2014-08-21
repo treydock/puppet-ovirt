@@ -5,7 +5,7 @@ require 'puppet-syntax/tasks/puppet-syntax'
 PuppetLint.configuration.send("disable_80chars")
 PuppetLint.configuration.send('disable_quoted_booleans')
 PuppetLint.configuration.log_format = "%{path}:%{linenumber}:%{check}:%{KIND}:%{message}"
-PuppetLint.configuration.fail_on_warnings = true
+PuppetLint.configuration.fail_on_warnings = false
 
 # Forsake support for Puppet 2.6.2 for the benefit of cleaner code.
 # http://puppet-lint.com/checks/class_parameter_defaults/

@@ -8,11 +8,6 @@ describe 'ovirt' do
   it { should create_class('ovirt') }
   it { should contain_class('ovirt::params') }
 
-  context "when release_version => '33'" do
-    let(:params) {{ :release_version => '33' }}
-    it { expect { should create_class('ovirt') }.to raise_error(Puppet::Error, /Only release_version 34 is supported/) }
-  end
-
   context "when version => '3.3'" do
     let(:params) {{ :version => '3.3' }}
     it { expect { should create_class('ovirt') }.to raise_error(Puppet::Error, /Only version 3.4 is supported/) }

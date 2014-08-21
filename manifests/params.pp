@@ -12,6 +12,8 @@
 #
 class ovirt::params {
 
+  $version = '3.4'
+
   case $::osfamily {
     'RedHat': {
       $ovirt_release_url        = 'http://resources.ovirt.org/pub/yum-repo/ovirt-release34.rpm'
