@@ -11,18 +11,26 @@
 # Copyright 2014 Trey Dockendorf
 #
 class ovirt::node (
+  $engine               = 'engine',
   $management_port      = '54321',
-  $ssl                  = 'true',
   $manage_firewall      = true,
   $storeconfigs_enabled = false,
   $register             = true,
-  $vdsm_configs         = {}
+  $register_address     = $::ipaddress,
+  $ssh_port             = '22',
+  $ssh_key_fingerprint  = 'UNSET',
+  $ssh_user             = 'root',
+  $register_name        = $::hostname,
 ) {
 
   validate_bool($manage_firewall)
   validate_bool($storeconfigs_enabled)
   validate_bool($register)
-  validate_hash($vdsm_configs)
+
+  $ssh_key_fingerprint_real = $ssh_key_fingerprint ? {
+    'UNSET' => '$(ssh-keygen -lf /etc/ssh/ssh_host_rsa_key | awk -F\' \' \'{ print $2 }\')',
+    default => $ssh_key_fingerprint,
+  }
 
   include ovirt
   include sudo
@@ -57,6 +65,16 @@ class ovirt::node (
     ensure    => 'present',
     priority  => 50,
     content   => template('ovirt/vdsm.sudo.erb'),
+  }
+
+  if $register {
+    file { '/etc/pki/vdsm': ensure => 'directory' }->
+    file { '/etc/pki/vdsm/certs': ensure => 'directory' }->
+    file { '/root/ovirt_node_register.sh':
+      ensure  => 'file',
+      content => template('ovirt/node/ovirt_node_register.sh.erb'),
+      require => File['/etc/vdsm/vdsm.id'],
+    }
   }
 
 }

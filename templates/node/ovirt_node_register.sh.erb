@@ -1,0 +1,47 @@
+# Based on Host Deploy Protocol - http://www.ovirt.org/Features/HostDeployProtocol
+
+# Define variables
+engine="<%= scope.lookupvar('ovirt::node::engine') %>"
+address="<%= scope.lookupvar('ovirt::node::register_address') %>"
+sshPort=<%= scope.lookupvar('ovirt::node::ssh_port') %>
+sshKeyFingerprint=<%= scope.lookupvar('ovirt::node::ssh_key_fingerprint_real') %>
+sshUser="<%= scope.lookupvar('ovirt::node::ssh_user') %>"
+vdsPort=<%= scope.lookupvar('ovirt::node::management_port') %>
+name="<%= scope.lookupvar('ovirt::node::register_name') %>"
+uniqueId=$(cat /etc/vdsm/vdsm.id)
+
+# Define constants
+CACERT="/etc/pki/vdsm/certs/cacert.pem"
+CURL_HTTP="curl --silent"
+CURL_HTTPS="curl --silent --cacert ${CACERT}"
+
+# Check version
+VERSION=$(${CURL_HTTP} "http://${engine}/ovirt-engine/services/host-register?version=1&command=get-version")
+[ $VERSION -lt 1 ] && { echo "Version must be >= 1"; exit 1 ; }
+
+# Download engine cacert and install
+if [ -f ${CACERT} ]; then
+  cacert_backup="${CACERT}.$(date +%Y%m%d%H%M%S)"
+  echo "Making backup of ${CACERT} to ${cacert_backup}"
+  cp -a ${CACERT} ${cacert_backup}
+fi
+${CURL_HTTP} "http://${engine}/ovirt-engine/services/host-register?version=1&command=get-pki-trust" > ${CACERT}
+
+# Get SSH public key from engine
+OPENSSH_PUBKEY=$(${CURL_HTTPS} "https://${engine}/ovirt-engine/services/host-register?version=1&command=get-ssh-trust")
+PUBKEY=(${OPENSSH_PUBKEY})
+puppet resource ssh_authorized_key "${PUBKEY[2]}" key="${PUBKEY[1]}" type="${PUBKEY[0]}" user="${sshUser}"
+
+# Register host with engine
+REGISTER_URL=()
+REGISTER_URL+="https://${engine}/ovirt-engine/services/host-register?version=1&"
+REGISTER_URL+="address=${address}&"
+REGISTER_URL+="sshPort=${sshPort}&"
+REGISTER_URL+="sshKeyFingerprint=${sshKeyFingerprint}&"
+REGISTER_URL+="sshUser=${sshUser}&"
+REGISTER_URL+="vdsPort=${vdsPort}&"
+REGISTER_URL+="name=${name}&"
+REGISTER_URL+="uniqueId=${uniqueId}&"
+REGISTER_URL+="command=register"
+
+${CURL_HTTPS} "${REGISTER_URL[@]}"
