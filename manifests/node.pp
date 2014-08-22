@@ -38,6 +38,7 @@ class ovirt::node (
   }
 
   include ovirt
+  require 'ovirt::repo'
   include sudo
 
   if $manage_firewall {

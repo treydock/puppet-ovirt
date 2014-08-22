@@ -107,6 +107,7 @@ class ovirt::engine (
 ) inherits ovirt::params {
 
   include ovirt
+  require 'ovirt::repo'
 
   $answers_file = '/var/lib/ovirt-engine/setup/answers/ovirt-engine-setup.conf'
 

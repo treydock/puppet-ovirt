@@ -8,6 +8,7 @@ describe 'ovirt::engine' do
   it { should create_class('ovirt::engine') }
   it { should contain_class('ovirt::params') }
   it { should contain_class('ovirt') }
+  it { should contain_class('ovirt::repo') }
 
   it do
     should contain_package('ovirt-engine').with({

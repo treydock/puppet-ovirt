@@ -7,6 +7,7 @@ describe 'ovirt::node' do
 
   it { should create_class('ovirt::node') }
   it { should contain_class('ovirt') }
+  it { should contain_class('ovirt::repo') }
   it { should contain_class('sudo') }
   it { should contain_class('ovirt::node::firewall') }
 
