@@ -1,0 +1,92 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 4097 (0x1001)
+    Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=US, O=tamu.edu, CN=centos-65-x64.tamu.edu.26391
+        Validity
+            Not Before: Aug 21 15:58:12 2014
+            Not After : Jul 27 15:58:12 2019 GMT
+        Subject: C=US, O=tamu.edu, CN=centos-65-x64.tamu.edu
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:ad:7b:f4:77:bf:4d:02:8a:30:3f:50:ca:8c:ef:
+                    3c:d8:69:e8:c6:a4:29:3e:6c:32:d0:f2:81:3f:70:
+                    91:b4:9e:03:91:81:12:8d:9b:56:ef:e8:d3:60:f3:
+                    98:90:61:42:00:df:be:3a:13:4b:fd:53:9f:04:04:
+                    23:23:2f:50:c6:c5:3b:3b:f5:89:41:49:54:b2:12:
+                    52:5d:e9:64:6f:1b:59:86:52:31:10:35:87:6b:21:
+                    ff:c5:ff:3d:12:2d:c0:5c:69:0a:e6:af:50:a4:03:
+                    c3:07:9c:40:d1:d8:82:4b:2d:07:26:c1:fb:f7:a6:
+                    81:da:b5:67:63:1a:05:ad:c2:7e:71:18:05:63:1c:
+                    4a:c3:b4:d2:37:80:33:16:cf:59:2f:09:87:ea:cc:
+                    9b:9c:ad:2f:d1:55:e6:5b:f7:a0:79:07:1a:0a:81:
+                    ff:d4:2d:d8:b1:13:17:16:3c:da:6f:0b:45:4b:18:
+                    fa:bd:c1:7c:a4:8a:98:4b:ba:42:53:22:8e:1a:55:
+                    ba:a4:b2:df:4e:c4:d5:8b:53:9a:20:0c:32:8f:1e:
+                    57:59:9d:65:ae:46:ff:fc:76:89:f3:24:f0:00:5c:
+                    ff:f9:bc:1f:97:82:12:a5:1c:f1:cd:e4:ea:d7:29:
+                    3f:16:e2:69:ca:19:5d:e5:d1:13:ab:da:29:39:6d:
+                    a6:cd
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Subject Key Identifier: 
+                16:10:1C:7D:DD:1F:0C:9A:DC:17:45:5B:02:E4:11:15:AF:30:4E:96
+            Authority Information Access: 
+                CA Issuers - URI:http://centos-65-x64.tamu.edu:80/ovirt-engine/services/pki-resource?resource=ca-certificate&format=X509-PEM-CA
+
+            X509v3 Authority Key Identifier: 
+                keyid:20:B1:E5:5B:91:4C:AA:26:F4:68:3F:8B:B3:4E:6B:84:D5:F2:6B:C1
+                DirName:/C=US/O=tamu.edu/CN=centos-65-x64.tamu.edu.26391
+                serial:10:00
+
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Key Usage: critical
+                Digital Signature, Key Encipherment
+            X509v3 Extended Key Usage: critical
+                TLS Web Server Authentication, TLS Web Client Authentication
+    Signature Algorithm: sha1WithRSAEncryption
+         a3:ea:5a:90:f1:cc:a1:ea:74:7d:cd:4c:c4:bd:00:a0:b6:21:
+         ff:27:2d:3f:ee:b0:7e:7f:4d:e1:73:73:67:f3:53:d7:52:78:
+         74:72:d6:ab:16:82:6b:63:5a:c4:55:c7:18:43:d9:af:9e:ee:
+         4c:1b:9e:bb:b0:df:76:34:9e:58:3f:a5:09:d0:45:dc:0b:57:
+         d5:2f:a7:7f:87:e4:30:16:b8:8e:d8:5a:ce:b3:87:bb:82:db:
+         c4:a7:ba:8d:7a:06:01:60:6a:b6:ec:15:e1:27:c7:f4:41:48:
+         fc:2e:6c:2e:17:cb:8e:27:92:bc:61:60:52:72:38:36:a9:be:
+         db:02:66:b4:07:e5:c0:24:18:4c:87:39:a8:df:04:97:f9:1c:
+         09:9b:79:fb:f5:6f:5a:c6:dc:0a:cc:d4:70:7d:c5:a1:41:93:
+         08:bc:ad:dc:0e:14:97:f7:af:5b:b5:b2:93:92:55:57:c0:19:
+         22:44:18:c1:cb:83:32:57:e9:7e:9d:62:ec:84:96:7d:1d:29:
+         e3:c9:40:e5:d0:10:d8:24:a4:72:c1:ed:37:b2:dd:86:46:ce:
+         80:9b:01:ae:9a:bf:a6:00:a2:49:bb:1d:97:90:bd:52:28:4e:
+         55:94:6d:50:8a:a5:3e:63:e9:bc:eb:fb:e9:54:a1:f5:2f:93:
+         3b:72:11:48
+-----BEGIN CERTIFICATE-----
+MIIEaTCCA1GgAwIBAgICEAEwDQYJKoZIhvcNAQEFBQAwRzELMAkGA1UEBhMCVVMx
+ETAPBgNVBAoTCHRhbXUuZWR1MSUwIwYDVQQDExxjZW50b3MtNjUteDY0LnRhbXUu
+ZWR1LjI2MzkxMCIXETE0MDgyMTE1NTgxMiswMDAwFw0xOTA3MjcxNTU4MTJaMEEx
+CzAJBgNVBAYTAlVTMREwDwYDVQQKEwh0YW11LmVkdTEfMB0GA1UEAxMWY2VudG9z
+LTY1LXg2NC50YW11LmVkdTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+AK179He/TQKKMD9QyozvPNhp6MakKT5sMtDygT9wkbSeA5GBEo2bVu/o02DzmJBh
+QgDfvjoTS/1TnwQEIyMvUMbFOzv1iUFJVLISUl3pZG8bWYZSMRA1h2sh/8X/PRIt
+wFxpCuavUKQDwwecQNHYgkstBybB+/emgdq1Z2MaBa3CfnEYBWMcSsO00jeAMxbP
+WS8Jh+rMm5ytL9FV5lv3oHkHGgqB/9Qt2LETFxY82m8LRUsY+r3BfKSKmEu6QlMi
+jhpVuqSy307E1YtTmiAMMo8eV1mdZa5G//x2ifMk8ABc//m8H5eCEqUc8c3k6tcp
+PxbiacoZXeXRE6vaKTltps0CAwEAAaOCAV8wggFbMB0GA1UdDgQWBBQWEBx93R8M
+mtwXRVsC5BEVrzBOljCBigYIKwYBBQUHAQEEfjB8MHoGCCsGAQUFBzAChm5odHRw
+Oi8vY2VudG9zLTY1LXg2NC50YW11LmVkdTo4MC9vdmlydC1lbmdpbmUvc2Vydmlj
+ZXMvcGtpLXJlc291cmNlP3Jlc291cmNlPWNhLWNlcnRpZmljYXRlJmZvcm1hdD1Y
+NTA5LVBFTS1DQTBwBgNVHSMEaTBngBQgseVbkUyqJvRoP4uzTmuE1fJrwaFLpEkw
+RzELMAkGA1UEBhMCVVMxETAPBgNVBAoTCHRhbXUuZWR1MSUwIwYDVQQDExxjZW50
+b3MtNjUteDY0LnRhbXUuZWR1LjI2MzkxggIQADAJBgNVHRMEAjAAMA4GA1UdDwEB
+/wQEAwIFoDAgBgNVHSUBAf8EFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDQYJKoZI
+hvcNAQEFBQADggEBAKPqWpDxzKHqdH3NTMS9AKC2If8nLT/usH5/TeFzc2fzU9dS
+eHRy1qsWgmtjWsRVxxhD2a+e7kwbnruw33Y0nlg/pQnQRdwLV9Uvp3+H5DAWuI7Y
+Ws6zh7uC28Snuo16BgFgarbsFeEnx/RBSPwubC4Xy44nkrxhYFJyODapvtsCZrQH
+5cAkGEyHOajfBJf5HAmbefv1b1rG3ArM1HB9xaFBkwi8rdwOFJf3r1u1spOSVVfA
+GSJEGMHLgzJX6X6dYuyEln0dKePJQOXQENgkpHLB7Tey3YZGzoCbAa6av6YAokm7
+HZeQvVIoTlWUbVCKpT5j6bzr++lUofUvkztyEUg=
+-----END CERTIFICATE-----
