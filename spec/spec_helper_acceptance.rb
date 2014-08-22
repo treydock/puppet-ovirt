@@ -1,5 +1,4 @@
-require 'beaker-rspec/spec_helper'
-require 'beaker-rspec/helpers/serverspec'
+require 'beaker-rspec'
 
 hosts.each do |host|
   # Install Puppet
@@ -27,6 +26,7 @@ RSpec.configure do |c|
       on host, puppet('module', 'install', 'puppetlabs-inifile', '--version', '"1.x"'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module', 'install', 'puppetlabs-postgresql', '--version', '"3.x"'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module', 'install', 'saz-sudo', '--version', '"3.x"'), { :acceptable_exit_codes => [0,1] }
+      on host, puppet('module', 'install', 'treydock-gpg_key'), { :acceptable_exit_codes => [0,1] }
     end
   end
 end
