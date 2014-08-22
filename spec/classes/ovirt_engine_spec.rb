@@ -12,7 +12,7 @@ describe 'ovirt::engine' do
   it do
     should contain_package('ovirt-engine').with({
       'ensure'    => 'installed',
-      'require'   => 'Package[ovirt-release]',
+      'require'   => 'Yumrepo[ovirt-stable]',
       'before'    => 'File[ovirt-engine-setup.conf]',
     })
   end

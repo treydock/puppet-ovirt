@@ -189,7 +189,7 @@ class ovirt::engine (
 
   package { 'ovirt-engine':
     ensure  => installed,
-    require => Package['ovirt-release'],
+    require => Yumrepo['ovirt-stable'],
     before  => File['ovirt-engine-setup.conf'],
   }
 
