@@ -1,0 +1,7 @@
+<% vdsm_configs = scope.lookupvar('ovirt::node::vdsm_configs') -%>
+<% if vdsm_configs and ! vdsm_configs.empty? -%>
+[environment:enforce]
+<% vdsm_configs.each do |vdsm_config| -%>
+VDSM_CONFIG/<%= vdsm_configs %>
+<% end -%>
+<% end -%>

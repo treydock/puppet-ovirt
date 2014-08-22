@@ -21,11 +21,16 @@ class ovirt::node (
   $ssh_key_fingerprint  = 'UNSET',
   $ssh_user             = 'root',
   $register_name        = $::hostname,
+  $vdsm_configs         = [],
 ) {
 
   validate_bool($manage_firewall)
   validate_bool($storeconfigs_enabled)
   validate_bool($register)
+
+  if $vdsm_configs {
+    validate_array($vdsm_configs)
+  }
 
   $ssh_key_fingerprint_real = $ssh_key_fingerprint ? {
     'UNSET' => '$(ssh-keygen -lf /etc/ssh/ssh_host_rsa_key | awk -F\' \' \'{ print $2 }\')',
@@ -77,4 +82,9 @@ class ovirt::node (
     }
   }
 
+  file { '/etc/ovirt-host-deploy.conf.d': ensure  => 'directory' }->
+  file { '/etc/ovirt-host-deploy.conf.d/40-custom-vdsm-config.conf':
+    ensure  => 'file',
+    content => template('ovirt/node/40-custom-vdsm-config.conf.erb'),
+  }
 }
