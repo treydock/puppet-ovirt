@@ -2,6 +2,6 @@
 <% if vdsm_configs and ! vdsm_configs.empty? -%>
 [environment:enforce]
 <% vdsm_configs.each do |vdsm_config| -%>
-VDSM_CONFIG/<%= vdsm_configs %>
+VDSM_CONFIG/<%= vdsm_config %>
 <% end -%>
 <% end -%>
