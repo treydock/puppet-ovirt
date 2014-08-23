@@ -4,6 +4,7 @@ require 'openssl'
 class Facter::Util::Ovirt
 
   # Returns converted key
+  # REF: https://github.com/bensie/sshkey for original source of this method
   #
   # @return [String]
   #
