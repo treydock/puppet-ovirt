@@ -241,6 +241,16 @@ class ovirt::engine (
   }
 
   if $storeconfigs_enabled {
+    if $::ovirt_engine_ssh_pubkey {
+      @@ssh_authorized_key { 'ovirt-engine':
+        ensure  => 'present',
+        key     => $::ovirt_engine_ssh_pubkey,
+        type    => 'ssh-rsa',
+        user    => 'root',
+        tag     => 'ovirt::engine',
+      }
+    }
+
     Host <<| tag == 'ovirt::node' |>>
   }
 }

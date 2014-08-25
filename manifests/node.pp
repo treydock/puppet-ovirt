@@ -52,6 +52,8 @@ class ovirt::node (
       ip            => $::ipaddress_ovirtmgmt,
       tag           => 'ovirt::node',
     }
+
+    Ssh_authorized_key <<| tag == 'ovirt::engine' |>>
   }
 
   file { '/etc/vdsm':
