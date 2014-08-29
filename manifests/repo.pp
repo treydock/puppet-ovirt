@@ -40,7 +40,6 @@ class ovirt::repo {
     descr               => 'GlusterFS is a clustered file-system capable of scaling to several petabytes.',
     enabled             => '1',
     gpgcheck            => '0',
-    skip_if_unavailable => '1',
   }
 
   yumrepo { 'ovirt-glusterfs-noarch-epel':
@@ -50,7 +49,6 @@ class ovirt::repo {
     descr               => 'GlusterFS is a clustered file-system capable of scaling to several petabytes.',
     enabled             => '1',
     gpgcheck            => '0',
-    skip_if_unavailable => '1',
   }
 
   yumrepo { 'ovirt-jpackage-6.0-generic':
@@ -73,7 +71,21 @@ class ovirt::repo {
     gpgkey              => 'file:///etc/pki/rpm-gpg/RPM-GPG-ovirt',
 #    baseurl            => "http://resources.ovirt.org/pub/ovirt-${::ovirt::version}/rpm/el${::operatingsystemmajrelease}/",
     mirrorlist          => "http://resources.ovirt.org/pub/yum-repo/mirrorlist-ovirt-${::ovirt::version}-el${::operatingsystemmajrelease}",
-    skip_if_unavailable => '1',
+  }
+
+  # Yumrepo skip_if_unavailable only in Puppet >= 3.6.0
+  if versioncmp($::puppetversion, '3.6.0') >= 0 {
+    Yumrepo <| title == 'ovirt-glusterfs-epel' |> {
+      skip_if_unavailable => '1',
+    }
+
+    Yumrepo <| title == 'ovirt-glusterfs-noarch-epel' |> {
+      skip_if_unavailable => '1',
+    }
+
+    Yumrepo <| title == 'ovirt-stable' |> {
+      skip_if_unavailable => '1',
+    }
   }
 
 }
