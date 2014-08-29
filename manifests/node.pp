@@ -52,7 +52,9 @@ class ovirt::node (
       ip            => $::ipaddress_ovirtmgmt,
       tag           => 'ovirt::node',
     }
+  }
 
+  if $storeconfigs_enabled {
     Ssh_authorized_key <<| tag == 'ovirt::engine' |>>
   }
 
