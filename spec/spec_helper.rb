@@ -17,6 +17,8 @@ RSpec.configure do |c|
   c.include PuppetlabsSpec::Files
 end
 
+PUPPET_VERSION = Gem.loaded_specs['puppet'].version.to_s
+
 shared_context :defaults do
   let(:node) { 'foo.example.com' }
 
@@ -31,6 +33,7 @@ shared_context :defaults do
       :domain                     => 'example.com',
       :fqdn                       => 'foo.example.com',
       :concat_basedir             => '/tmp/ovirt',
+      :puppetversion              => PUPPET_VERSION,
     }
   end
 end

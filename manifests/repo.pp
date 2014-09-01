@@ -8,7 +8,11 @@ class ovirt::repo {
   include ::epel
 
   if versioncmp($::puppetversion, '3.5.0') >= 0 {
-    # Yumrepo ensure => absent only in Puppet >= 3.5.0
+    # Yumrepo ensure only in Puppet >= 3.5.0
+    Yumrepo <| title == 'ovirt-glusterfs-epel' |> { ensure => 'present' }
+    Yumrepo <| title == 'ovirt-glusterfs-noarch-epel' |> { ensure => 'present' }
+    Yumrepo <| title == 'ovirt-jpackage-6.0-generic' |> { ensure => 'present' }
+    Yumrepo <| title == 'ovirt-stable' |> { ensure => 'present' }
     yumrepo { "ovirt-${::ovirt::version}-epel": ensure => 'absent' }
   }
 
@@ -34,7 +38,6 @@ class ovirt::repo {
   }
 
   yumrepo { 'ovirt-glusterfs-epel':
-    ensure              => 'present',
     name                => "ovirt-${::ovirt::version}-glusterfs-epel",
     baseurl             => 'http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/$basearch/',
     descr               => 'GlusterFS is a clustered file-system capable of scaling to several petabytes.',
@@ -43,7 +46,6 @@ class ovirt::repo {
   }
 
   yumrepo { 'ovirt-glusterfs-noarch-epel':
-    ensure              => 'present',
     name                => "ovirt-${::ovirt::version}-glusterfs-noarch-epel",
     baseurl             => 'http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/noarch',
     descr               => 'GlusterFS is a clustered file-system capable of scaling to several petabytes.',
@@ -52,7 +54,6 @@ class ovirt::repo {
   }
 
   yumrepo { 'ovirt-jpackage-6.0-generic':
-    ensure      => 'present',
     name        => "ovirt-${::ovirt::version}-jpackage-6.0-generic",
     descr       => 'JPackage 6.0, for generic',
     enabled     => '1',
@@ -63,7 +64,6 @@ class ovirt::repo {
   }
 
   yumrepo { 'ovirt-stable':
-    ensure              => 'present',
     name                => "ovirt-${::ovirt::version}-stable",
     descr               => "Latest oVirt ${::ovirt::version} Release",
     enabled             => '1',
