@@ -21,9 +21,11 @@ class ovirt::params {
       if versioncmp($::operatingsystemrelease, '7.0') >= 0 {
         $qemu_agent_service_name  = 'qemu-guest-agent'
         $ovirt_agent_package_name = 'ovirt-guest-agent-common'
+        $manage_jpackage_repo     = false
       } else {
         $qemu_agent_service_name  = 'qemu-ga'
         $ovirt_agent_package_name = 'ovirt-guest-agent'
+        $manage_jpackage_repo     = true
       }
 
       $qemu_agent_package_name  = 'qemu-guest-agent'
@@ -31,10 +33,14 @@ class ovirt::params {
 
       case $::operatingsystem {
         'Fedora': {
-          $firewall_manager     = 'firewalld'
+          $firewall_manager       = 'firewalld'
+          $manage_gluster_repos   = false
+          $patternfly1_repo_osbit = 'fedora-$releasever-$basearch'
         }
         default: {
-          $firewall_manager     = 'iptables'
+          $firewall_manager       = 'iptables'
+          $manage_gluster_repos   = true
+          $patternfly1_repo_osbit = "epel-${::operatingsystemmajrelease}-\$basearch"
         }
       }
 

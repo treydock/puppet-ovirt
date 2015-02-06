@@ -19,6 +19,6 @@ class ovirt (
   $version = $ovirt::params::version,
 ) inherits ovirt::params {
 
-  validate_re($version, [ '^3.4$' ], 'Only version 3.4 is supported')
+  validate_re($version, [ '^3.4$', '^3.5$' ], 'Only version 3.4 is supported')
 
 }
