@@ -101,6 +101,7 @@ class ovirt::engine (
   $db_port                  = '5432',
   $firewall_manager         = $ovirt::params::firewall_manager,
   $manage_firewall          = true,
+  $update_firewall          = undef,
   $websocket_proxy_config   = true,
   $run_engine_setup         = true,
   $storeconfigs_enabled     = false
@@ -177,7 +178,7 @@ class ovirt::engine (
   }
 
   if $manage_firewall {
-    $update_firewall = false
+    $update_firewall_real = pick($update_firewall, false)
 
     firewall { '100 allow ovirt-websocket-proxy':
       port    => '6100',
@@ -185,7 +186,7 @@ class ovirt::engine (
       action  => 'accept',
     }
   } else {
-    $update_firewall = true
+    $update_firewall_real = pick($update_firewall, true)
   }
 
   package { 'ovirt-engine':
