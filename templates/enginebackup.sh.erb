@@ -24,7 +24,7 @@ cleanup
 
 <% end -%>
 
-engine-backup --mode=backup --scope=<%= @backup_scope %> --file=${DIR}/${PREFIX}_`date +%Y%m%d-%H%M%S`.tar.bz2 --log=${DIR}/${PREFIX}.log
+engine-backup --mode=backup --scope=<%= @backup_scope %> --file=${DIR}/${PREFIX}_`date +%Y%m%d-%H%M%S`.tar.bz2 --log=${DIR}/${PREFIX}.log 1>/dev/null
 
 <% unless @delete_before_backup -%>
 if [ $? -eq 0 ] ; then
