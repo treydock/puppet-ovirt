@@ -43,7 +43,7 @@ describe 'ovirt::engine::backup' do
       '    find "${DIR}/" -maxdepth 1 -type f -name "${PREFIX}*.tar.bz2" -mtime +${ROTATE} -print0 | xargs -0 -r rm -f',
       '}',
       'cleanup',
-      'engine-backup --mode=backup --scope=all --file=${DIR}/${PREFIX}_`date +%Y%m%d-%H%M%S`.tar.bz2 --log=${DIR}/${PREFIX}.log',
+      'engine-backup --mode=backup --scope=all --file=${DIR}/${PREFIX}_`date +%Y%m%d-%H%M%S`.tar.bz2 --log=${DIR}/${PREFIX}.log 1>/dev/null',
     ]
   end
 
@@ -71,7 +71,7 @@ describe 'ovirt::engine::backup' do
         '{',
         '    find "${DIR}/" -maxdepth 1 -type f -name "${PREFIX}*.tar.bz2" -mtime +${ROTATE} -print0 | xargs -0 -r rm -f',
         '}',
-        'engine-backup --mode=backup --scope=all --file=${DIR}/${PREFIX}_`date +%Y%m%d-%H%M%S`.tar.bz2 --log=${DIR}/${PREFIX}.log',
+        'engine-backup --mode=backup --scope=all --file=${DIR}/${PREFIX}_`date +%Y%m%d-%H%M%S`.tar.bz2 --log=${DIR}/${PREFIX}.log 1>/dev/null',
         'if [ $? -eq 0 ] ; then',
         '    cleanup',
         'fi',

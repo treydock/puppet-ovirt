@@ -1,9 +1,14 @@
+<% ovirt_version = scope.lookupvar('ovirt::version') %>
 Cmnd_Alias VDSM_LIFECYCLE = \
     /usr/sbin/dmidecode, \
     /usr/share/vdsm/mk_sysprep_floppy, \
     /sbin/service ksmtuned *, \
+<% if ovirt_version == '3.4' -%>
     /sbin/service ksm *, \
     /usr/share/vdsm/prepare-vmchannel
+<% elsif ovirt_version == '3.5' -%>
+    /sbin/service ksm *
+<% end -%>
 Cmnd_Alias VDSM_STORAGE = /bin/mount, /bin/umount, \
     /sbin/fsck -p *, \
     /sbin/tune2fs -j *, \
@@ -18,6 +23,9 @@ Cmnd_Alias VDSM_STORAGE = /bin/mount, /bin/umount, \
     /usr/bin/vdsm-tool service-restart multipathd, \
     /usr/bin/vdsm-tool service-reload multipathd, \
     /sbin/iscsiadm *, \
+<% if ovirt_version == '3.5' -%>
+    /usr/libexec/vdsm/fc-scan, \
+<% end -%>
     /sbin/lvm, \
     /bin/cat /sys/block/*/device/../../*, \
     /bin/cat /sys/devices/platform/host*, \
