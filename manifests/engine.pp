@@ -107,9 +107,6 @@ class ovirt::engine (
   $storeconfigs_enabled     = false
 ) inherits ovirt::params {
 
-  include ovirt
-  require 'ovirt::repo'
-
   $answers_file = '/var/lib/ovirt-engine/setup/answers/ovirt-engine-setup.conf'
 
   validate_bool($manage_postgresql_server)
@@ -121,137 +118,30 @@ class ovirt::engine (
   validate_bool($websocket_proxy_config)
   validate_bool($storeconfigs_enabled)
 
-  if $run_engine_setup {
-    $postgresql_server_before = Exec['engine-setup']
-    $service_subscribe        = Exec['engine-setup']
-    $service_require          = undef
-  } else {
-    $postgresql_server_before = undef
-    $service_subscribe        = undef
-    $service_require          = Package['ovirt-engine']
-  }
-
   if $manage_postgresql_server {
     $postgres_provisioning_enabled = false
-
-    class { 'postgresql::server':
-      manage_firewall => $manage_firewall,
-      before          => $postgresql_server_before,
-    }
-
-    postgresql::server::config_entry { 'max_connections':
-      value => 150,
-    }
-
-    postgresql::server::pg_hba_rule { 'allow engine access on 0.0.0.0/0 using md5':
-      type        => 'host',
-      database    => $db_name,
-      user        => $db_user,
-      address     => '0.0.0.0/0',
-      auth_method => 'md5',
-      order       => '010',
-    }
-
-    postgresql::server::pg_hba_rule { 'allow engine access on ::0/0 using md5':
-      type        => 'host',
-      database    => $db_name,
-      user        => $db_user,
-      address     => '::0/0',
-      auth_method => 'md5',
-      order       => '011',
-    }
-
-    postgresql::server::role { $db_user:
-      password_hash => postgresql_password($db_user, $db_password),
-      before        => Postgresql::Server::Database[$db_name],
-    }
-
-    postgresql::server::database { $db_name:
-      encoding  => 'UTF8',
-      locale    => 'en_US.UTF-8',
-      template  => 'template0',
-      owner     => $db_user,
-      before    => $postgresql_server_before,
-    }
   } else {
     $postgres_provisioning_enabled = true
   }
 
   if $manage_firewall {
     $update_firewall_real = pick($update_firewall, false)
-
-    firewall { '100 allow ovirt-websocket-proxy':
-      port    => '6100',
-      proto   => 'tcp',
-      action  => 'accept',
-    }
   } else {
     $update_firewall_real = pick($update_firewall, true)
   }
 
-  package { 'ovirt-engine':
-    ensure  => installed,
-    require => Yumrepo['ovirt-stable'],
-    before  => File['ovirt-engine-setup.conf'],
-  }
+  include ovirt
+  include ovirt::repo
+  include ovirt::engine::postgresql
+  include ovirt::engine::install
+  include ovirt::engine::config
+  include ovirt::engine::service
 
-  if $config_allinone {
-    package { 'ovirt-engine-setup-plugin-allinone':
-      ensure  => installed,
-      require => Package['ovirt-engine'],
-      before  => File['ovirt-engine-setup.conf'],
-    }
-  }
-
-  file { 'ovirt-engine-setup.conf':
-    ensure  => present,
-    path    => $answers_file,
-    content => template('ovirt/answers.erb'),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0600',
-  }
-
-  service { 'ovirt-engine':
-    ensure      => 'running',
-    enable      => true,
-    hasstatus   => true,
-    hasrestart  => true,
-    require     => $service_require,
-    subscribe   => $service_subscribe,
-  }
-
-  if $websocket_proxy_config {
-    service { 'ovirt-websocket-proxy':
-      ensure      => 'running',
-      enable      => true,
-      hasstatus   => true,
-      hasrestart  => true,
-      require     => $service_require,
-      subscribe   => $service_subscribe,
-    }
-  }
-
-  exec { 'engine-setup':
-    refreshonly => true,
-    path        => '/usr/bin/:/bin/:/sbin:/usr/sbin',
-    command     => "yes 'Yes' | engine-setup --config-append=${answers_file}",
-    timeout     => 0,
-    subscribe   => Package['ovirt-engine'],
-    require     => File['ovirt-engine-setup.conf'],
-  }
-
-  if $storeconfigs_enabled {
-    if $::ovirt_engine_ssh_pubkey {
-      @@ssh_authorized_key { 'ovirt-engine':
-        ensure  => 'present',
-        key     => $::ovirt_engine_ssh_pubkey,
-        type    => 'ssh-rsa',
-        user    => 'root',
-        tag     => 'ovirt::engine',
-      }
-    }
-
-    Host <<| tag == 'ovirt::node' |>>
-  }
+  anchor { 'ovirt::engine::start': }->
+  Class['ovirt::repo']->
+  Class['ovirt::engine::postgresql']->
+  Class['ovirt::engine::install']->
+  Class['ovirt::engine::config']->
+  Class['ovirt::engine::service']->
+  anchor { 'ovirt::engine::end': }
 }
