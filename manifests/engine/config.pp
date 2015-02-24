@@ -49,4 +49,14 @@ class ovirt::engine::config {
 
     Host <<| tag == 'ovirt::node' |>>
   }
+
+  if $ovirt::engine::notifier_mail_server {
+    shellvar { 'ovirt-engine-notifier MAIL_SERVER':
+      ensure   => present,
+      target   => $ovirt::engine::notifier_config_path,
+      variable => 'MAIL_SERVER',
+      value    => $ovirt::engine::notifier_mail_server,
+      notify   => Service['ovirt-engine-notifier'],
+    }
+  }
 }

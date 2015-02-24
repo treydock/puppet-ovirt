@@ -16,7 +16,8 @@ class ovirt::params {
 
   case $::osfamily {
     'RedHat': {
-      $ovirt_release_url        = 'http://resources.ovirt.org/pub/yum-repo/ovirt-release34.rpm'
+      $ovirt_release_url            = 'http://resources.ovirt.org/pub/yum-repo/ovirt-release34.rpm'
+      $engine_notifier_config_path  = '/usr/share/ovirt-engine/services/ovirt-engine-notifier/ovirt-engine-notifier.conf'
 
       if versioncmp($::operatingsystemrelease, '7.0') >= 0 {
         $qemu_agent_service_name  = 'qemu-guest-agent'

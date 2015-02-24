@@ -104,7 +104,9 @@ class ovirt::engine (
   $update_firewall          = undef,
   $websocket_proxy_config   = true,
   $run_engine_setup         = true,
-  $storeconfigs_enabled     = false
+  $storeconfigs_enabled     = false,
+  $notifier_config_path     = $ovirt::params::engine_notifier_config_path,
+  $notifier_mail_server     = undef,
 ) inherits ovirt::params {
 
   $answers_file = '/var/lib/ovirt-engine/setup/answers/ovirt-engine-setup.conf'

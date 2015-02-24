@@ -20,4 +20,14 @@ class ovirt::engine::service {
       require     => Service['ovirt-engine'],
     }
   }
+
+  if $ovirt::engine::notifier_mail_server {
+    service { 'ovirt-engine-notifier':
+      ensure     => 'running',
+      enable     => true,
+      hasstatus  => true,
+      hasrestart => true,
+      require    => Service['ovirt-engine'],
+    }
+  }
 }
