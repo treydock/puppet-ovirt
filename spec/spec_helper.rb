@@ -13,6 +13,10 @@ rescue Exception => e
   warn "Coveralls disabled"
 end
 
+dir = File.expand_path(File.dirname(__FILE__))
+
+Dir["#{dir}/support/*.rb"].sort.each { |f| require f }
+
 RSpec.configure do |c|
   c.include PuppetlabsSpec::Files
 end

@@ -90,6 +90,11 @@ class ovirt::repo {
       gpgcheck => '0',
     }
 
+    if versioncmp($::puppetversion, '3.5.0') >= 0 {
+      # Yumrepo ensure only in Puppet >= 3.5.0
+      Yumrepo <| title == 'ovirt-patternfly1-noarch-epel' |> { ensure => 'present' }
+    }
+
     if versioncmp($::puppetversion, '3.6.0') >= 0 {
       Yumrepo <| title == 'ovirt-patternfly1-noarch-epel' |> {
         skip_if_unavailable => '1',

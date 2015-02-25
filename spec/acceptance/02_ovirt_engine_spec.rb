@@ -7,12 +7,32 @@ describe 'ovirt::engine class' do
         class { 'ovirt': }
         class { 'ovirt::engine': }
       EOS
-  
+
       apply_manifest(pp, :catch_failures => true)
       apply_manifest(pp, :catch_changes => true)
     end
 
     describe package('ovirt-engine') do
+      it { should be_installed }
+    end
+  end
+
+  context 'with enable_reports => true' do
+    it 'should run successfully' do
+      pp =<<-EOS
+        class { 'ovirt': }
+        class { 'ovirt::engine': enable_reports => true }
+      EOS
+
+      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_changes => true)
+    end
+
+    describe package('ovirt-engine-reports') do
+      it { should be_installed }
+    end
+
+    describe package('ovirt-engine-dwh') do
       it { should be_installed }
     end
   end

@@ -39,3 +39,27 @@ CONFIG_ALLINONE=yes
 STORAGE_PATH=<%= @local_storage_path %>
 SUPERUSER_PASS=<%= @superuser_pass %>
 <% end -%>
+<% if @enable_reports -%>
+OVESETUP_DWH_CORE/enable=bool:True
+OVESETUP_DWH_DB/database=str:<%= @dwh_db_name %>
+OVESETUP_DWH_DB/secured=bool:False
+OVESETUP_DWH_DB/host=str:<%= @dwh_db_host %>
+OVESETUP_DWH_DB/disconnectExistingDwh=none:None
+OVESETUP_DWH_DB/restoreBackupLate=bool:True
+OVESETUP_DWH_DB/user=str:<%= @dwh_db_user %>
+OVESETUP_DWH_DB/securedHostValidation=bool:False
+OVESETUP_DWH_DB/performBackup=none:None
+OVESETUP_DWH_DB/password=str:<%= @dwh_db_password %>
+OVESETUP_DWH_DB/port=int:<%= @dwh_db_port %>
+OVESETUP_DWH_PROVISIONING/postgresProvisioningEnabled=bool:<%= @postgres_provisioning_enabled ? "True" : "False" %>
+OVESETUP_REPORTS_CORE/enable=bool:True
+OVESETUP_REPORTS_CONFIG/adminPassword=str:<%= @reports_admin_password %>
+OVESETUP_REPORTS_DB/database=str:<%= @reports_db_name %>
+OVESETUP_REPORTS_DB/secured=bool:False
+OVESETUP_REPORTS_DB/host=str:<%= @reports_db_host %>
+OVESETUP_REPORTS_DB/user=str:<%= @reports_db_user %>
+OVESETUP_REPORTS_DB/securedHostValidation=bool:False
+OVESETUP_REPORTS_DB/password=str:<%= @reports_db_password %>
+OVESETUP_REPORTS_DB/port=int:<%= @reports_db_port %>
+OVESETUP_REPORTS_PROVISIONING/postgresProvisioningEnabled=bool:<%= @postgres_provisioning_enabled ? "True" : "False" %>
+<% end -%>

@@ -14,4 +14,18 @@ class ovirt::engine::install {
       require => Package['ovirt-engine'],
     }
   }
+
+  if $ovirt::engine::enable_reports {
+    package { 'ovirt-engine-reports':
+      ensure  => installed,
+      require => Package['ovirt-engine'],
+      #notify  => Exec['engine-setup'],
+    }
+
+    package { 'ovirt-engine-dwh':
+      ensure  => installed,
+      require => Package['ovirt-engine'],
+      #notify  => Exec['engine-setup'],
+    }
+  }
 }

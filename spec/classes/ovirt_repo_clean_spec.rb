@@ -8,7 +8,6 @@ describe 'ovirt::repo::clean' do
   it { should create_class('ovirt::repo::clean') }
   it { should contain_class('ovirt') }
 
-  it { should contain_file('/etc/yum.repos.d/ovirt-3.4.repo').with_ensure('absent') }
-  it { should contain_file('/etc/yum.repos.d/ovirt-3.4-dependencies.repo').with_ensure('absent') }
+  it { should contain_file('/etc/yum.repos.d/ovirt-3.5-dependencies.repo').with_ensure('absent') }
 
 end

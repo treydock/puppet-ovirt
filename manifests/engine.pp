@@ -107,6 +107,18 @@ class ovirt::engine (
   $storeconfigs_enabled     = false,
   $notifier_config_path     = $ovirt::params::engine_notifier_config_path,
   $notifier_mail_server     = undef,
+  $enable_reports           = false,
+  $reports_admin_password   = 'admin',
+  $reports_db_user          = 'ovirt_engine_reports',
+  $reports_db_password      = 'ovirt_engine_reports',
+  $reports_db_name          = 'ovirt_engine_reports',
+  $reports_db_host          = 'localhost',
+  $reports_db_port          = '5432',
+  $dwh_db_user              = 'ovirt_engine_history',
+  $dwh_db_password          = 'ovirt_engine_history',
+  $dwh_db_name              = 'ovirt_engine_history',
+  $dwh_db_host              = 'localhost',
+  $dwh_db_port              = '5432',
 ) inherits ovirt::params {
 
   $answers_file = '/var/lib/ovirt-engine/setup/answers/ovirt-engine-setup.conf'
@@ -119,6 +131,7 @@ class ovirt::engine (
   validate_bool($manage_firewall)
   validate_bool($websocket_proxy_config)
   validate_bool($storeconfigs_enabled)
+  validate_bool($enable_reports)
 
   if $manage_postgresql_server {
     $postgres_provisioning_enabled = false
