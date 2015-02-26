@@ -21,6 +21,7 @@ class ovirt::node (
   $ssh_key_fingerprint  = 'UNSET',
   $ssh_user             = 'root',
   $register_name        = $::hostname,
+  $ovirtmgmt_interface  = 'ovirtmgmt',
   $vdsm_configs         = [],
 ) {
 
@@ -37,6 +38,8 @@ class ovirt::node (
     default => $ssh_key_fingerprint,
   }
 
+  $ovirtmgmt_ipaddress = getvar("::ipaddress_${ovirtmgmt_interface}")
+
   include ovirt
   require 'ovirt::repo'
   include sudo
@@ -45,7 +48,7 @@ class ovirt::node (
     include ovirt::node::firewall
   }
 
-  if $storeconfigs_enabled and $::ipaddress_ovirtmgmt {
+  if $storeconfigs_enabled and $ovirtmgmt_ipaddress {
     @@host { $::fqdn:
       ensure        => 'present',
       host_aliases  => [$::hostname],
