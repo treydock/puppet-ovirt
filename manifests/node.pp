@@ -52,7 +52,7 @@ class ovirt::node (
     @@host { $::fqdn:
       ensure        => 'present',
       host_aliases  => [$::hostname],
-      ip            => $::ipaddress_ovirtmgmt,
+      ip            => $ovirtmgmt_ipaddress,
       tag           => 'ovirt::node',
     }
   }
