@@ -13,6 +13,7 @@ shared_examples 'ovirt::engine::config' do
     content = catalogue.resource('file', 'ovirt-engine-setup.conf').send(:parameters)[:content]
     content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
       '[environment:default]',
+      'OVESETUP_ENGINE_CORE/enable=bool:True',
       'OVESETUP_CORE/engineStop=none:None',
       'OVESETUP_DIALOG/confirmSettings=bool:True',
       'OVESETUP_DB/database=str:engine',
