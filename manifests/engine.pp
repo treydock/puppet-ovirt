@@ -159,4 +159,14 @@ class ovirt::engine (
   Class['ovirt::engine::config']->
   Class['ovirt::engine::service']->
   anchor { 'ovirt::engine::end': }
+
+  if $config_allinone {
+    class { 'ovirt::node':
+      manage_firewall      => $manage_firewall,
+      storeconfigs_enabled => $storeconfigs_enabled,
+      register             => false,
+      before               => Anchor['ovirt::engine::end'],
+    }
+  }
+
 }

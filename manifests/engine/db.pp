@@ -1,5 +1,7 @@
 # See README.md for details
 define ovirt::engine::db ($password, $user = $title) {
+  include postgresql::server
+
   postgresql::server::pg_hba_rule { "allow ${name} access on 0.0.0.0/0 using md5":
     type        => 'host',
     database    => $name,

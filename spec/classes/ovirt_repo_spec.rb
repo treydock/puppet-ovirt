@@ -12,23 +12,6 @@ describe 'ovirt::repo' do
   it { should contain_stage('ovirt_repo_clean').that_comes_before('Stage[main]') }
   it { should contain_class('ovirt::repo::clean').with_stage('ovirt_repo_clean') }
 
-  it do
-    should contain_file('/etc/pki/rpm-gpg/RPM-GPG-ovirt').with({
-      :ensure => 'present',
-      :owner  => 'root',
-      :group  => 'root',
-      :mode   => '0644',
-      :source => 'puppet:///modules/ovirt/RPM-GPG-ovirt',
-    })
-  end
-
-  it do
-    should contain_gpg_key('RPM-GPG-ovirt').with({
-      :path   => '/etc/pki/rpm-gpg/RPM-GPG-ovirt',
-      :before => 'Yumrepo[ovirt-stable]',
-    })
-  end
-
   if Gem::Version.new(PUPPET_VERSION) >= Gem::Version.new('3.5.0')
     it { should contain_yumrepo('ovirt-3.5-epel').with_ensure('absent') }
     it { should contain_yumrepo('ovirt-glusterfs-epel').with_ensure('present') }

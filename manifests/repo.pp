@@ -38,19 +38,6 @@ class ovirt::repo {
     stage => ovirt_repo_clean,
   }
 
-  file { '/etc/pki/rpm-gpg/RPM-GPG-ovirt':
-    ensure => 'present',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
-    source => 'puppet:///modules/ovirt/RPM-GPG-ovirt',
-  }
-
-  gpg_key { 'RPM-GPG-ovirt':
-    path    => '/etc/pki/rpm-gpg/RPM-GPG-ovirt',
-    before  => Yumrepo['ovirt-stable'],
-  }
-
   if $ovirt::manage_gluster_repos {
     yumrepo { 'ovirt-glusterfs-epel':
       name                => "ovirt-${::ovirt::version}-glusterfs-epel",
@@ -107,7 +94,7 @@ class ovirt::repo {
     descr               => "Latest oVirt ${::ovirt::version} Release",
     enabled             => '1',
     gpgcheck            => '1',
-    gpgkey              => 'file:///etc/pki/rpm-gpg/RPM-GPG-ovirt',
+    gpgkey              => 'http://plain.resources.ovirt.org/pub/keys/RPM-GPG-ovirt',
 #    baseurl            => "http://resources.ovirt.org/pub/ovirt-${::ovirt::version}/rpm/el${::operatingsystemmajrelease}/",
     mirrorlist          => "http://resources.ovirt.org/pub/yum-repo/mirrorlist-ovirt-${::ovirt::version}-el${::operatingsystemmajrelease}",
   }
