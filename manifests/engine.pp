@@ -85,7 +85,7 @@
 class ovirt::engine (
   $manage_postgresql_server = true,
   $config_allinone          = false,
-  $local_storage_path       = undef,
+  $local_storage_path       = '/var/lib/images',
   $superuser_pass           = undef,
   $application_mode         = 'both',
   $storage_type             = 'nfs',
@@ -125,7 +125,7 @@ class ovirt::engine (
 
   validate_bool($manage_postgresql_server)
   validate_re($application_mode, ['^both$','^virt$','^gluster$'])
-  validate_re($storage_type, ['^nfs$','^fs$','^iscsi$','^posixfs$'])
+  validate_re($storage_type, ['^nfs$','^fs$','^iscsi$','^posixfs$', '^none$'])
   validate_bool($config_allinone)
   validate_bool($nfs_config_enabled)
   validate_bool($manage_firewall)

@@ -74,7 +74,9 @@ shared_examples 'ovirt::engine::config' do
 
     it do
       verify_contents(catalogue, 'ovirt-engine-setup.conf', [
-        'CONFIG_ALLINONE=yes',
+        'OVESETUP_AIO/configure=bool:True',
+        'OVESETUP_AIO/storageDomainName=str:local_storage',
+        'OVESETUP_AIO/storageDomainDir=str:/var/lib/images',
       ])
     end
   end

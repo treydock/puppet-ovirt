@@ -26,18 +26,23 @@ OVESETUP_CONFIG/firewallManager=str:<%= @firewall_manager %>
 OVESETUP_CONFIG/updateFirewall=bool:<%= @update_firewall_real ? "True" : "False" %>
 OVESETUP_CONFIG/websocketProxyConfig=bool:<%= @websocket_proxy_config ? "True" : "False" %>
 OVESETUP_CONFIG/fqdn=str:<%= @fqdn %>
+<% if @storage_type == 'none' -%>
+OVESETUP_CONFIG/storageType=none:None
+<% else -%>
 OVESETUP_CONFIG/storageType=str:<%= @storage_type %>
+<% end -%>
 OVESETUP_PROVISIONING/postgresProvisioningEnabled=bool:<%= @postgres_provisioning_enabled ? "True" : "False" %>
 OVESETUP_APACHE/configureRootRedirection=bool:True
 OVESETUP_APACHE/configureSsl=bool:True
 OSETUP_RPMDISTRO/requireRollback=none:None
 OSETUP_RPMDISTRO/enableUpgrade=none:None
+<% if @config_allinone -%>
+OVESETUP_AIO/configure=bool:True
+OVESETUP_AIO/storageDomainName=str:local_storage
+OVESETUP_AIO/storageDomainDir=str:<%= @local_storage_path %>
+<% else -%>
 OVESETUP_AIO/configure=none:None
 OVESETUP_AIO/storageDomainDir=none:None
-<% if @config_allinone -%>
-CONFIG_ALLINONE=yes
-STORAGE_PATH=<%= @local_storage_path %>
-SUPERUSER_PASS=<%= @superuser_pass %>
 <% end -%>
 <% if @enable_reports -%>
 OVESETUP_DWH_CORE/enable=bool:True
