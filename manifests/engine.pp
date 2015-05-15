@@ -90,6 +90,7 @@ class ovirt::engine (
   $application_mode         = 'both',
   $storage_type             = 'nfs',
   $organization             = $::domain,
+  $setup_fqdn               = $::fqdn,
   $nfs_config_enabled       = true,
   $iso_domain_name          = 'ISO_DOMAIN',
   $iso_domain_mount_point   = '/var/lib/exports/iso',

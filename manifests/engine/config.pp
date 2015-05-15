@@ -5,15 +5,11 @@ class ovirt::engine::config {
   }
 
   if $ovirt::engine::manage_firewall {
-    $update_firewall = pick($ovirt::engine::update_firewall, false)
-
     firewall { '100 allow ovirt-websocket-proxy':
       port    => '6100',
       proto   => 'tcp',
       action  => 'accept',
     }
-  } else {
-    $update_firewall = pick($ovirt::engine::update_firewall, true)
   }
 
   file { 'ovirt-engine-setup.conf':

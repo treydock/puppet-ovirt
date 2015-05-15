@@ -26,7 +26,7 @@ OVESETUP_CONFIG/applicationMode=str:<%= @application_mode %>
 OVESETUP_CONFIG/firewallManager=str:<%= @firewall_manager %>
 OVESETUP_CONFIG/updateFirewall=bool:<%= @update_firewall_real ? "True" : "False" %>
 OVESETUP_CONFIG/websocketProxyConfig=bool:<%= @websocket_proxy_config ? "True" : "False" %>
-OVESETUP_CONFIG/fqdn=str:<%= @fqdn %>
+OVESETUP_CONFIG/fqdn=str:<%= @setup_fqdn %>
 <% if @storage_type == 'none' -%>
 OVESETUP_CONFIG/storageType=none:None
 <% else -%>
