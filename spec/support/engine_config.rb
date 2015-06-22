@@ -88,7 +88,7 @@ shared_examples 'ovirt::engine::config' do
     it do
       should contain_shellvar('ovirt-engine-notifier MAIL_SERVER').with({
         :ensure   => 'present',
-        :target   => '/usr/share/ovirt-engine/services/ovirt-engine-notifier/ovirt-engine-notifier.conf',
+        :target   => '/etc/ovirt-engine/notifier/notifier.conf.d/99-local.conf',
         :variable => 'MAIL_SERVER',
         :value    => 'mail.example.com',
         :notify   => 'Service[ovirt-engine-notifier]',
