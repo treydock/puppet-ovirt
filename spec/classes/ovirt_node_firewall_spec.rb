@@ -55,6 +55,15 @@ describe 'ovirt::node::firewall' do
     })
   end
 
+  it do
+    should contain_firewall('100 allow forward across bridge').with({
+      :physdev_is_bridged => 'true',
+      :proto              => 'all',
+      :action             => 'accept',
+      :chain              => 'FORWARD',
+    })
+  end
+
   context 'when ovirt::node::management_port => "12345"' do
     let :pre_condition do
       "class { 'ovirt::node':

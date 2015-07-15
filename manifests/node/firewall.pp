@@ -35,4 +35,11 @@ class ovirt::node::firewall {
     chain   => 'INPUT',
   }
 
+  firewall { '100 allow forward across bridge':
+    physdev_is_bridged => true,
+    proto              => 'all',
+    action             => 'accept',
+    chain              => 'FORWARD',
+  }
+
 }
