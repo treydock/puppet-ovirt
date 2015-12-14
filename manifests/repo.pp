@@ -48,21 +48,21 @@ class ovirt::repo {
 
   if $ovirt::manage_gluster_repos {
     yumrepo { 'ovirt-glusterfs-epel':
-      name                => "ovirt-${::ovirt::version}-glusterfs-epel",
-      baseurl             => 'http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/$basearch/',
-      descr               => 'GlusterFS is a clustered file-system capable of scaling to several petabytes.',
-      enabled             => '1',
-      gpgcheck            => '1',
-      gpgkey              => 'https://download.gluster.org/pub/gluster/glusterfs/LATEST/pub.key',
+      name     => "ovirt-${::ovirt::version}-glusterfs-epel",
+      baseurl  => 'http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/$basearch/',
+      descr    => 'GlusterFS is a clustered file-system capable of scaling to several petabytes.',
+      enabled  => '1',
+      gpgcheck => '1',
+      gpgkey   => 'https://download.gluster.org/pub/gluster/glusterfs/LATEST/pub.key',
     }
 
     yumrepo { 'ovirt-glusterfs-noarch-epel':
-      name                => "ovirt-${::ovirt::version}-glusterfs-noarch-epel",
-      baseurl             => 'http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/noarch',
-      descr               => 'GlusterFS is a clustered file-system capable of scaling to several petabytes.',
-      enabled             => '1',
-      gpgcheck            => '1',
-      gpgkey              => 'https://download.gluster.org/pub/gluster/glusterfs/LATEST/pub.key',
+      name     => "ovirt-${::ovirt::version}-glusterfs-noarch-epel",
+      baseurl  => 'http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/noarch',
+      descr    => 'GlusterFS is a clustered file-system capable of scaling to several petabytes.',
+      enabled  => '1',
+      gpgcheck => '1',
+      gpgkey   => 'https://download.gluster.org/pub/gluster/glusterfs/LATEST/pub.key',
     }
   }
 
@@ -115,13 +115,13 @@ class ovirt::repo {
   }
 
   yumrepo { 'ovirt-stable':
-    name                => $ovirt_repo_name,
-    descr               => "Latest oVirt ${::ovirt::version} Release",
-    enabled             => '1',
-    gpgcheck            => '1',
-    gpgkey              => 'http://plain.resources.ovirt.org/pub/keys/RPM-GPG-ovirt',
+    name       => $ovirt_repo_name,
+    descr      => "Latest oVirt ${::ovirt::version} Release",
+    enabled    => '1',
+    gpgcheck   => '1',
+    gpgkey     => 'http://plain.resources.ovirt.org/pub/keys/RPM-GPG-ovirt',
 #    baseurl            => "http://resources.ovirt.org/pub/ovirt-${::ovirt::version}/rpm/el${::operatingsystemmajrelease}/",
-    mirrorlist          => "http://resources.ovirt.org/pub/yum-repo/mirrorlist-ovirt-${::ovirt::version}-el${::operatingsystemmajrelease}",
+    mirrorlist => "http://resources.ovirt.org/pub/yum-repo/mirrorlist-ovirt-${::ovirt::version}-el${::operatingsystemmajrelease}",
   }
 
   # Yumrepo skip_if_unavailable only in Puppet >= 3.6.0

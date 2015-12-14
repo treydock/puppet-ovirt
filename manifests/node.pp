@@ -50,10 +50,10 @@ class ovirt::node (
 
   if $storeconfigs_enabled and $ovirtmgmt_ipaddress {
     @@host { $::fqdn:
-      ensure        => 'present',
-      host_aliases  => [$::hostname],
-      ip            => $ovirtmgmt_ipaddress,
-      tag           => 'ovirt::node',
+      ensure       => 'present',
+      host_aliases => [$::hostname],
+      ip           => $ovirtmgmt_ipaddress,
+      tag          => 'ovirt::node',
     }
   }
 
@@ -75,9 +75,9 @@ class ovirt::node (
   }
 
   sudo::conf { 'vdsm':
-    ensure    => 'present',
-    priority  => 50,
-    content   => template('ovirt/vdsm.sudo.erb'),
+    ensure   => 'present',
+    priority => 50,
+    content  => template('ovirt/vdsm.sudo.erb'),
   }
 
   if $register {

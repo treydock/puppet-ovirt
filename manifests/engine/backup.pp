@@ -116,11 +116,11 @@ class ovirt::engine::backup (
   }
 
   file { 'enginebackupdir':
-    ensure  => 'directory',
-    path    => $backup_dir,
-    mode    => '0700',
-    owner   => 'root',
-    group   => 'root',
+    ensure => 'directory',
+    path   => $backup_dir,
+    mode   => '0700',
+    owner  => 'root',
+    group  => 'root',
   }
 
 }

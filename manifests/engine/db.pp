@@ -27,9 +27,9 @@ define ovirt::engine::db ($password, $user = $title) {
   }
 
   postgresql::server::database { $name:
-    encoding  => 'UTF8',
-    locale    => 'en_US.UTF-8',
-    template  => 'template0',
-    owner     => $user,
+    encoding => 'UTF8',
+    locale   => 'en_US.UTF-8',
+    template => 'template0',
+    owner    => $user,
   }
 }

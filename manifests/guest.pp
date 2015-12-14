@@ -32,17 +32,17 @@ class ovirt::guest (
 
       if $manage_qemu_agent {
         package { 'qemu-guest-agent':
-          ensure  => $qemu_agent_package_ensure,
-          name    => $qemu_agent_package_name,
-          before  => Service['qemu-guest-agent'],
+          ensure => $qemu_agent_package_ensure,
+          name   => $qemu_agent_package_name,
+          before => Service['qemu-guest-agent'],
         }
 
         service { 'qemu-guest-agent':
-          ensure      => $qemu_agent_service_ensure,
-          enable      => $qemu_agent_service_enable,
-          name        => $qemu_agent_service_name,
-          hasstatus   => true,
-          hasrestart  => true,
+          ensure     => $qemu_agent_service_ensure,
+          enable     => $qemu_agent_service_enable,
+          name       => $qemu_agent_service_name,
+          hasstatus  => true,
+          hasrestart => true,
         }
       }
 
@@ -54,11 +54,11 @@ class ovirt::guest (
       }
 
       service { 'ovirt-guest-agent':
-        ensure      => $ovirt_agent_service_ensure,
-        enable      => $ovirt_agent_service_enable,
-        name        => $ovirt_agent_service_name,
-        hasstatus   => true,
-        hasrestart  => true,
+        ensure     => $ovirt_agent_service_ensure,
+        enable     => $ovirt_agent_service_enable,
+        name       => $ovirt_agent_service_name,
+        hasstatus  => true,
+        hasrestart => true,
       }
     }
     # If we are not oVirt, do not do anything.

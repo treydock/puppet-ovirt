@@ -5,19 +5,19 @@ class ovirt::engine::service {
   }
 
   service { 'ovirt-engine':
-    ensure      => 'running',
-    enable      => true,
-    hasstatus   => true,
-    hasrestart  => true,
+    ensure     => 'running',
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
   }
 
   if $ovirt::engine::websocket_proxy_config {
     service { 'ovirt-websocket-proxy':
-      ensure      => 'running',
-      enable      => true,
-      hasstatus   => true,
-      hasrestart  => true,
-      require     => Service['ovirt-engine'],
+      ensure     => 'running',
+      enable     => true,
+      hasstatus  => true,
+      hasrestart => true,
+      require    => Service['ovirt-engine'],
     }
   }
 

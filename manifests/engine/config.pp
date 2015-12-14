@@ -6,9 +6,9 @@ class ovirt::engine::config {
 
   if $ovirt::engine::manage_firewall {
     firewall { '100 allow ovirt-websocket-proxy':
-      port    => '6100',
-      proto   => 'tcp',
-      action  => 'accept',
+      port   => '6100',
+      proto  => 'tcp',
+      action => 'accept',
     }
   }
 
@@ -35,11 +35,11 @@ class ovirt::engine::config {
   if $ovirt::engine::storeconfigs_enabled {
     if $::ovirt_engine_ssh_pubkey {
       @@ssh_authorized_key { 'ovirt-engine':
-        ensure  => 'present',
-        key     => $::ovirt_engine_ssh_pubkey,
-        type    => 'ssh-rsa',
-        user    => 'root',
-        tag     => 'ovirt::engine',
+        ensure => 'present',
+        key    => $::ovirt_engine_ssh_pubkey,
+        type   => 'ssh-rsa',
+        user   => 'root',
+        tag    => 'ovirt::engine',
       }
     }
 
