@@ -3,69 +3,69 @@
 OVESETUP_ENGINE_CORE/enable=bool:True
 OVESETUP_CORE/engineStop=none:None
 OVESETUP_DIALOG/confirmSettings=bool:True
-OVESETUP_DB/database=str:<%= @db_name %>
+OVESETUP_DB/database=str:<%= scope.lookupvar('ovirt::engine::db_name') %>
 OVESETUP_DB/fixDbViolations=none:None
 OVESETUP_DB/secured=bool:False
-OVESETUP_DB/host=str:<%= @db_host %>
-OVESETUP_DB/user=str:<%= @db_user %>
+OVESETUP_DB/host=str:<%= scope.lookupvar('ovirt::engine::db_host') %>
+OVESETUP_DB/user=str:<%= scope.lookupvar('ovirt::engine::db_user') %>
 OVESETUP_DB/securedHostValidation=bool:False
-OVESETUP_DB/password=str:<%= @db_password %>
-OVESETUP_DB/port=int:<%= @db_port %>
-OVESETUP_SYSTEM/nfsConfigEnabled=bool:<%= @nfs_config_enabled ? "True" : "False" %>
+OVESETUP_DB/password=str:<%= scope.lookupvar('ovirt::engine::db_password') %>
+OVESETUP_DB/port=int:<%= scope.lookupvar('ovirt::engine::db_port') %>
+OVESETUP_SYSTEM/nfsConfigEnabled=bool:<%= scope.lookupvar('ovirt::engine::nfs_config_enabled') ? "True" : "False" %>
 OVESETUP_SYSTEM/memCheckEnabled=bool:True
-OVESETUP_PKI/organization=str:<%= @organization %>
-<% if @nfs_config_enabled -%>
-OVESETUP_CONFIG/isoDomainName=str:<%= @iso_domain_name %>
-OVESETUP_CONFIG/isoDomainMountPoint=str:<%= @iso_domain_mount_point %>
+OVESETUP_PKI/organization=str:<%= scope.lookupvar('ovirt::engine::organization') %>
+<% if scope.lookupvar('ovirt::engine::nfs_config_enabled') -%>
+OVESETUP_CONFIG/isoDomainName=str:<%= scope.lookupvar('ovirt::engine::iso_domain_name') %>
+OVESETUP_CONFIG/isoDomainMountPoint=str:<%= scope.lookupvar('ovirt::engine::iso_domain_mount_point') %>
 <% else -%>
 OVESETUP_CONFIG/isoDomainName=none:None
 OVESETUP_CONFIG/isoDomainMountPoint=none:None
 <% end -%>
-OVESETUP_CONFIG/adminPassword=str:<%= @admin_password %>
-OVESETUP_CONFIG/applicationMode=str:<%= @application_mode %>
-OVESETUP_CONFIG/firewallManager=str:<%= @firewall_manager %>
-OVESETUP_CONFIG/updateFirewall=bool:<%= @update_firewall_real ? "True" : "False" %>
-OVESETUP_CONFIG/websocketProxyConfig=bool:<%= @websocket_proxy_config ? "True" : "False" %>
-OVESETUP_CONFIG/fqdn=str:<%= @setup_fqdn %>
-<% if @storage_type == 'none' -%>
+OVESETUP_CONFIG/adminPassword=str:<%= scope.lookupvar('ovirt::engine::admin_password') %>
+OVESETUP_CONFIG/applicationMode=str:<%= scope.lookupvar('ovirt::engine::application_mode') %>
+OVESETUP_CONFIG/firewallManager=str:<%= scope.lookupvar('ovirt::engine::firewall_manager') %>
+OVESETUP_CONFIG/updateFirewall=bool:<%= scope.lookupvar('ovirt::engine::update_firewall_real') ? "True" : "False" %>
+OVESETUP_CONFIG/websocketProxyConfig=bool:<%= scope.lookupvar('ovirt::engine::websocket_proxy_config') ? "True" : "False" %>
+OVESETUP_CONFIG/fqdn=str:<%= scope.lookupvar('ovirt::engine::setup_fqdn') %>
+<% if scope.lookupvar('ovirt::engine::storage_type') == 'none' -%>
 OVESETUP_CONFIG/storageType=none:None
 <% else -%>
-OVESETUP_CONFIG/storageType=str:<%= @storage_type %>
+OVESETUP_CONFIG/storageType=str:<%= scope.lookupvar('ovirt::engine::storage_type') %>
 <% end -%>
-OVESETUP_PROVISIONING/postgresProvisioningEnabled=bool:<%= @postgres_provisioning_enabled ? "True" : "False" %>
+OVESETUP_PROVISIONING/postgresProvisioningEnabled=bool:<%= scope.lookupvar('ovirt::engine::postgres_provisioning_enabled') ? "True" : "False" %>
 OVESETUP_APACHE/configureRootRedirection=bool:True
 OVESETUP_APACHE/configureSsl=bool:True
 OSETUP_RPMDISTRO/requireRollback=none:None
 OSETUP_RPMDISTRO/enableUpgrade=none:None
-<% if @config_allinone -%>
+<% if scope.lookupvar('ovirt::engine::config_allinone') -%>
 OVESETUP_AIO/configure=bool:True
 OVESETUP_AIO/storageDomainName=str:local_storage
-OVESETUP_AIO/storageDomainDir=str:<%= @local_storage_path %>
+OVESETUP_AIO/storageDomainDir=str:<%= scope.lookupvar('ovirt::engine::local_storage_path') %>
 <% else -%>
 OVESETUP_AIO/configure=none:None
 OVESETUP_AIO/storageDomainDir=none:None
 <% end -%>
-<% if @enable_reports -%>
+<% if scope.lookupvar('ovirt::engine::enable_reports') -%>
 OVESETUP_DWH_CORE/enable=bool:True
-OVESETUP_DWH_DB/database=str:<%= @dwh_db_name %>
+OVESETUP_DWH_DB/database=str:<%= scope.lookupvar('ovirt::engine::dwh_db_name') %>
 OVESETUP_DWH_DB/secured=bool:False
-OVESETUP_DWH_DB/host=str:<%= @dwh_db_host %>
+OVESETUP_DWH_DB/host=str:<%= scope.lookupvar('ovirt::engine::dwh_db_host') %>
 OVESETUP_DWH_DB/disconnectExistingDwh=none:None
 OVESETUP_DWH_DB/restoreBackupLate=bool:True
-OVESETUP_DWH_DB/user=str:<%= @dwh_db_user %>
+OVESETUP_DWH_DB/user=str:<%= scope.lookupvar('ovirt::engine::dwh_db_user') %>
 OVESETUP_DWH_DB/securedHostValidation=bool:False
 OVESETUP_DWH_DB/performBackup=none:None
-OVESETUP_DWH_DB/password=str:<%= @dwh_db_password %>
-OVESETUP_DWH_DB/port=int:<%= @dwh_db_port %>
-OVESETUP_DWH_PROVISIONING/postgresProvisioningEnabled=bool:<%= @postgres_provisioning_enabled ? "True" : "False" %>
+OVESETUP_DWH_DB/password=str:<%= scope.lookupvar('ovirt::engine::dwh_db_password') %>
+OVESETUP_DWH_DB/port=int:<%= scope.lookupvar('ovirt::engine::dwh_db_port') %>
+OVESETUP_DWH_PROVISIONING/postgresProvisioningEnabled=bool:<%= scope.lookupvar('ovirt::engine::postgres_provisioning_enabled') ? "True" : "False" %>
 OVESETUP_REPORTS_CORE/enable=bool:True
-OVESETUP_REPORTS_CONFIG/adminPassword=str:<%= @reports_admin_password %>
-OVESETUP_REPORTS_DB/database=str:<%= @reports_db_name %>
+OVESETUP_REPORTS_CONFIG/adminPassword=str:<%= scope.lookupvar('ovirt::engine::reports_admin_password') %>
+OVESETUP_REPORTS_DB/database=str:<%= scope.lookupvar('ovirt::engine::reports_db_name') %>
 OVESETUP_REPORTS_DB/secured=bool:False
-OVESETUP_REPORTS_DB/host=str:<%= @reports_db_host %>
-OVESETUP_REPORTS_DB/user=str:<%= @reports_db_user %>
+OVESETUP_REPORTS_DB/host=str:<%= scope.lookupvar('ovirt::engine::reports_db_host') %>
+OVESETUP_REPORTS_DB/user=str:<%= scope.lookupvar('ovirt::engine::reports_db_user') %>
 OVESETUP_REPORTS_DB/securedHostValidation=bool:False
-OVESETUP_REPORTS_DB/password=str:<%= @reports_db_password %>
-OVESETUP_REPORTS_DB/port=int:<%= @reports_db_port %>
-OVESETUP_REPORTS_PROVISIONING/postgresProvisioningEnabled=bool:<%= @postgres_provisioning_enabled ? "True" : "False" %>
+OVESETUP_REPORTS_DB/password=str:<%= scope.lookupvar('ovirt::engine::reports_db_password') %>
+OVESETUP_REPORTS_DB/port=int:<%= scope.lookupvar('ovirt::engine::reports_db_port') %>
+OVESETUP_REPORTS_PROVISIONING/postgresProvisioningEnabled=bool:<%= scope.lookupvar('ovirt::engine::postgres_provisioning_enabled') ? "True" : "False" %>
 <% end -%>
