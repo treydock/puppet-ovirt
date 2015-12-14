@@ -11,12 +11,20 @@ class ovirt::repo {
     '3.4': {
       $jpackage_includepkgs     = 'dom4j,isorelax,jaxen,jdom,msv,msv-xsdlib,relaxngDatatype,servicemix-specs,tomcat5-servlet-2.4-api,ws-jaxme,xalan-j2,xml-commons,xml-commons-jaxp-1.2-apis,xml-commons-resolver11,xom,xpp2,xpp3'
       $manage_patternfly1_repo  = false
+      $_manage_virtio_win_repo  = false
       $ovirt_repo_name          = 'ovirt-3.4-stable'
     }
     '3.5': {
       $jpackage_includepkgs     = 'dom4j,isorelax,jaxen,jdom,msv,msv-xsdlib,relaxngDatatype,servicemix-specs,tomcat5-servlet-2.4-api,ws-jaxme,xalan-j2,xml-commons,xml-commons-jaxp-1.2-apis,xml-commons-resolver11,xom,xpp2,xpp3,antlr3,stringtemplate'
       $manage_patternfly1_repo  = true
+      $_manage_virtio_win_repo  = false
       $ovirt_repo_name          = 'ovirt-3.5'
+    }
+    '3.6': {
+      $jpackage_includepkgs     = 'dom4j,isorelax,jaxen,jdom,msv,msv-xsdlib,relaxngDatatype,servicemix-specs,tomcat5-servlet-2.4-api,ws-jaxme,xalan-j2,xml-commons,xml-commons-jaxp-1.2-apis,xml-commons-resolver11,xom,xpp2,xpp3,antlr3,stringtemplate'
+      $manage_patternfly1_repo  = true
+      $_manage_virtio_win_repo  = true
+      $ovirt_repo_name          = 'ovirt-3.6'
     }
     default: {}
   }
@@ -44,7 +52,8 @@ class ovirt::repo {
       baseurl             => 'http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/$basearch/',
       descr               => 'GlusterFS is a clustered file-system capable of scaling to several petabytes.',
       enabled             => '1',
-      gpgcheck            => '0',
+      gpgcheck            => '1',
+      gpgkey              => 'https://download.gluster.org/pub/gluster/glusterfs/LATEST/pub.key',
     }
 
     yumrepo { 'ovirt-glusterfs-noarch-epel':
@@ -52,7 +61,8 @@ class ovirt::repo {
       baseurl             => 'http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/noarch',
       descr               => 'GlusterFS is a clustered file-system capable of scaling to several petabytes.',
       enabled             => '1',
-      gpgcheck            => '0',
+      gpgcheck            => '1',
+      gpgkey              => 'https://download.gluster.org/pub/gluster/glusterfs/LATEST/pub.key',
     }
   }
 
@@ -84,6 +94,21 @@ class ovirt::repo {
 
     if versioncmp($::puppetversion, '3.6.0') >= 0 {
       Yumrepo <| title == 'ovirt-patternfly1-noarch-epel' |> {
+        skip_if_unavailable => '1',
+      }
+    }
+  }
+
+  if $_manage_virtio_win_repo {
+    yumrepo { 'virtio-win-stable':
+      descr    => 'virtio-win builds roughly matching what was shipped in latest RHEL',
+      baseurl  => 'http://fedorapeople.org/groups/virt/virtio-win/repo/stable',
+      enabled  => '1',
+      gpgcheck => '0',
+    }
+
+    if versioncmp($::puppetversion, '3.6.0') >= 0 {
+      Yumrepo <| title == 'virtio-win-stable' |> {
         skip_if_unavailable => '1',
       }
     }

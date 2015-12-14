@@ -6,7 +6,7 @@ class ovirt::repo::clean {
 
   include ::ovirt
 
-  if $::ovirt::version != '3.5' {
+  if versioncmp($::ovirt::version, '3.5') < 0 {
     file { "/etc/yum.repos.d/ovirt-${::ovirt::version}.repo": ensure => absent }
   }
 

@@ -16,7 +16,6 @@ class ovirt::params {
 
   case $::osfamily {
     'RedHat': {
-      $ovirt_release_url            = 'http://resources.ovirt.org/pub/yum-repo/ovirt-release34.rpm'
       $engine_notifier_config_path  = '/etc/ovirt-engine/notifier/notifier.conf.d/99-local.conf'
 
       if versioncmp($::operatingsystemrelease, '7.0') >= 0 {

@@ -10,6 +10,6 @@ describe 'ovirt' do
 
   context "when version => '3.3'" do
     let(:params) {{ :version => '3.3' }}
-    it { expect { should create_class('ovirt') }.to raise_error(Puppet::Error, /Only version 3.4 is supported/) }
+    it { expect { should create_class('ovirt') }.to raise_error(Puppet::Error, /Only version 3.4, 3.5 and 3.6 are supported/) }
   end
 end
