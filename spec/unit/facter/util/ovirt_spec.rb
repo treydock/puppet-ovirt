@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'facter/util/file_read'
 require 'facter/util/ovirt'
 
-describe Facter::Util::Ovirt do
+describe 'Facter::Util::Ovirt' do
 
   SSH_PUBLIC_KEY = "AAAAB3NzaC1yc2EAAAADAQABAAABAQCte/R3v00CijA/UMqM7zzYaejGpCk+bDLQ8oE/cJG0ngORgRKNm1bv6NNg85iQYUIA3746E0v9U58EBCMjL1DGxTs79YlBSVSyElJd6WRvG1mGUjEQNYdrIf/F/z0SLcBcaQrmr1CkA8MHnEDR2IJLLQcmwfv3poHatWdjGgWtwn5xGAVjHErDtNI3gDMWz1kvCYfqzJucrS/RVeZb96B5BxoKgf/ULdixExcWPNpvC0VLGPq9wXykiphLukJTIo4aVbqkst9OxNWLU5ogDDKPHldZnWWuRv/8donzJPAAXP/5vB+XghKlHPHN5OrXKT8W4mnKGV3l0ROr2ik5babN"
 

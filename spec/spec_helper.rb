@@ -19,6 +19,10 @@ Dir["#{dir}/support/*.rb"].sort.each { |f| require f }
 
 RSpec.configure do |c|
   c.include PuppetlabsSpec::Files
+
+  c.mock_with :rspec do |c|
+    c.syntax = :expect
+  end
 end
 
 PUPPET_VERSION = Gem.loaded_specs['puppet'].version.to_s

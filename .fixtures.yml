@@ -17,7 +17,6 @@ fixtures:
       ref: v3.0.6
     epel:
       repo: git://github.com/stahnma/puppet-module-epel.git
-      ref: 0.1.0
     augeasproviders_core:
       repo: git://github.com/hercules-team/augeasproviders_core.git
     augeasproviders_shellvar:
