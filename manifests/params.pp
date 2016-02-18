@@ -22,10 +22,12 @@ class ovirt::params {
         $qemu_agent_service_name  = 'qemu-guest-agent'
         $ovirt_agent_package_name = 'ovirt-guest-agent-common'
         $manage_jpackage_repo     = false
+        $vdsm_sudo_template       = 'ovirt/vdsm.sudo.el7.erb'
       } else {
         $qemu_agent_service_name  = 'qemu-ga'
         $ovirt_agent_package_name = 'ovirt-guest-agent'
         $manage_jpackage_repo     = true
+        $vdsm_sudo_template       = 'ovirt/vdsm.sudo.el6.erb'
       }
 
       $qemu_agent_package_name  = 'qemu-guest-agent'

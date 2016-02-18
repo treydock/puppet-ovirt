@@ -1,0 +1,47 @@
+<% ovirt_version = scope.lookupvar('ovirt::version') -%>
+Cmnd_Alias VDSM_LIFECYCLE = \
+    /usr/sbin/dmidecode, \
+    /usr/share/vdsm/mk_sysprep_floppy, \
+    /usr/sbin/service ksmtuned *, \
+<% if ovirt_version == '3.4' -%>
+    /usr/sbin/service ksm *, \
+    /usr/usr/share/vdsm/prepare-vmchannel
+<% elsif ovirt_version == '3.5' -%>
+    /usr/sbin/service ksm *
+<% end -%>
+Cmnd_Alias VDSM_STORAGE = /usr/bin/mount, /usr/bin/umount, \
+    /usr/sbin/fsck -p *, \
+    /sbin/tune2fs -j *, \
+    /usr/sbin/mkfs -q -j *, \
+    /usr/bin/kill, \
+    /usr/bin/chown vdsm\:qemu *, \
+    /usr/bin/chown vdsm\:kvm *, \
+    /usr/bin/mv /etc/iscsi/iscsid.conf /etc/iscsi/iscsid.conf.*, \
+    /usr/bin/mv /etc/multipath.conf *, \
+    /usr/bin/cp * /etc/iscsi/iscsid.conf, \
+    /usr/sbin/service iscsid *, \
+    /usr/bin/vdsm-tool service-restart multipathd, \
+    /usr/bin/vdsm-tool service-reload multipathd, \
+    /sbin/iscsiadm *, \
+<% if ovirt_version == '3.5' -%>
+    /usr/libexec/vdsm/fc-scan, \
+<% end -%>
+    /sbin/lvm, \
+    /usr/bin/cat /sys/block/*/device/../../*, \
+    /usr/bin/cat /sys/devices/platform/host*, \
+    /usr/bin/cat /etc/iscsi/iscsid.conf, \
+    /usr/bin/cat /etc/multipath.conf, \
+    /usr/bin/dd of=/sys/class/scsi_host/host*/scan, \
+    /usr/bin/dd, \
+    /usr/sbin/persist /etc/multipath.conf, \
+    /usr/sbin/unpersist /etc/multipath.conf, \
+    /usr/bin/cp /etc/multipath.conf *, \
+    /usr/bin/cp * /etc/multipath.conf, \
+    /sbin/multipath, \
+    /usr/bin/setsid /usr/bin/ionice -c ? -n ? /usr/bin/su vdsm -s /bin/sh -c /usr/libexec/vdsm/spmprotect.sh*, \
+    /usr/sbin/service vdsmd *, \
+    /usr/sbin/reboot -f
+
+vdsm  ALL=(ALL) NOPASSWD: VDSM_LIFECYCLE, VDSM_STORAGE
+Defaults:vdsm !requiretty
+Defaults:vdsm !syslog

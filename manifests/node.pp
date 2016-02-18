@@ -23,7 +23,7 @@ class ovirt::node (
   $register_name        = $::hostname,
   $ovirtmgmt_interface  = 'ovirtmgmt',
   $vdsm_configs         = [],
-) {
+) inherits ovirt::params {
 
   validate_bool($manage_firewall)
   validate_bool($storeconfigs_enabled)
@@ -77,7 +77,7 @@ class ovirt::node (
   sudo::conf { 'vdsm':
     ensure   => 'present',
     priority => 50,
-    content  => template('ovirt/vdsm.sudo.erb'),
+    content  => template($ovirt::params::vdsm_sudo_template),
   }
 
   if $register {
