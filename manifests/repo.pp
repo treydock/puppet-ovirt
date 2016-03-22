@@ -53,7 +53,7 @@ class ovirt::repo {
       descr    => 'GlusterFS is a clustered file-system capable of scaling to several petabytes.',
       enabled  => '1',
       gpgcheck => '1',
-      gpgkey   => 'https://download.gluster.org/pub/gluster/glusterfs/LATEST/pub.key',
+      gpgkey   => 'https://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/rsa.pub',
     }
 
     yumrepo { 'ovirt-glusterfs-noarch-epel':
@@ -62,7 +62,7 @@ class ovirt::repo {
       descr    => 'GlusterFS is a clustered file-system capable of scaling to several petabytes.',
       enabled  => '1',
       gpgcheck => '1',
-      gpgkey   => 'https://download.gluster.org/pub/gluster/glusterfs/LATEST/pub.key',
+      gpgkey   => 'https://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/rsa.pub',
     }
   }
 
